@@ -4,12 +4,12 @@ import AboutMe from "./pages/AboutMe";
 import Projects from "./pages/Projects";
 
 function App() {
-  const page = "about-me";
+  const page = "projects";
   const [currentSection, setCurrentSection] = useState(page);
 
   const [cmdText, setCmdText] = useState("");
   const [cmdList, setCmdList] = useState([
-    { isCommand: true, text: "about_me" },
+    { isCommand: true, text: page },
   ]);
 
   interface CommandInterface {
@@ -43,7 +43,7 @@ function App() {
                   onClickCallBack={handleCmdListChange}
                   onPointerOutCallBack={setCmdText}
                 />
-      case "projects": <Projects />
+      case "projects": return <Projects />
       // case "skills":
     }
   }
@@ -68,7 +68,9 @@ function App() {
         <div className="main-container-content" id="terminal">
           {
             // generate commands
-            cmdList.map((item, index) => createCmd(item, index))
+            cmdList
+            .slice(-10)
+            .map((item, index) => createCmd(item, index))
           }
 
           <div className="line current">
