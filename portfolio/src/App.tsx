@@ -1,9 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import AboutMe from "./pages/AboutMe";
 import Projects from "./pages/Projects";
+import type {CommandInterface, ProjectCard} from "./common/PublicInterfaces";
+import ProjectDetails from "./components/ProjectDetails";
 
 function App() {
+
+  const projectData: ProjectCard[] = [
+    {
+      header: "Project #1",
+      imagesUrl: "https://placehold.co/400x250",
+      shortDescription:
+        "This project aims to make a better world by providing a \
+                way to remove the PT from Brazil, and stuff like that",
+      fullDescription: "This is the full description of Project #1",
+      technologies: ["Java"],
+    },
+    {
+      header: "Project #2",
+      imagesUrl: "https://placehold.co/400x250",
+      shortDescription:
+        "This project aims to make a better world by providing a \
+                way to remove the PT from Brazil, and stuff like that",
+      fullDescription: "This is the full description of Project #2",
+      technologies: ["Java", "HTML", "CSS", "Javascript"],
+    },
+    {
+      header: "Project #3",
+      imagesUrl: "https://placehold.co/400x250",
+      shortDescription:
+        "This project aims to make a better world by providing a \
+                way to remove the PT from Brazil, and stuff like that",
+      fullDescription: "This is the full description of Project #1",
+      technologies: [
+        "Java",
+        "JUnit",
+        "Spring",
+        "Spring Security",
+        "Docker",
+        "MySQL",
+        "HMTL",
+        "CSS",
+        "Javascript",
+        "Redis",
+      ],
+    },
+  ];
+
   const page = "projects";
   const [currentSection, setCurrentSection] = useState(page);
 
@@ -11,11 +55,6 @@ function App() {
   const [cmdList, setCmdList] = useState([
     { isCommand: true, text: page },
   ]);
-
-  interface CommandInterface {
-    isCommand: boolean; 
-    text: string
-  }
 
   const handleCmdListChange = (action: "remove" | "add", isCommand = true) => {
     switch (action) {
@@ -35,6 +74,7 @@ function App() {
     }
   }
 
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState(-1);
   const renderCurrentSectionPage = () => {
     switch (currentSection) {
       case "about-me":
@@ -43,10 +83,42 @@ function App() {
                   onClickCallBack={handleCmdListChange}
                   onPointerOutCallBack={setCmdText}
                 />
-      case "projects": return <Projects />
+      case "projects": 
+        return <Projects 
+                  setSelectedProjectIndex={setSelectedProjectIndex}   
+                  projectData={projectData}
+                />
       // case "skills":
     }
   }
+
+   useEffect(() => {
+    if (selectedProjectIndex < 0) return;
+
+    const previousOverflow = document.body.style.overflowY;
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = previousOverflow;
+    };
+  }, [selectedProjectIndex]);
+
+
+const RenderSelectedProject = () => {
+    const selectedProject = projectData[selectedProjectIndex];
+
+    return (<>
+      <div
+        className="shadow-curtain"
+        onClick={() => setSelectedProjectIndex(-1)}
+      ></div>
+
+      <ProjectDetails 
+        selectedProject={selectedProject} 
+        selectedProjectIndex={selectedProjectIndex}
+      /></>)
+  };
+
 
   const createCmd = ({isCommand, text}: CommandInterface, index: number) => {
     return isCommand ? (
@@ -82,6 +154,8 @@ function App() {
 
         { renderCurrentSectionPage() }
       </div>
+
+      {(selectedProjectIndex != -1) ? RenderSelectedProject() : null}
     </>
   );
 }
