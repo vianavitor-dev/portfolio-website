@@ -12,9 +12,8 @@ function App() {
       header: "Project #1",
       imagesUrl: "https://placehold.co/400x250",
       shortDescription:
-        "This project aims to make a better world by providing a \
-                way to remove the PT from Brazil, and stuff like that",
-      fullDescription: "This is the full description of Project #1",
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      fullDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       technologies: ["Java"],
     },
     {
@@ -23,7 +22,7 @@ function App() {
       shortDescription:
         "This project aims to make a better world by providing a \
                 way to remove the PT from Brazil, and stuff like that",
-      fullDescription: "This is the full description of Project #2",
+      fullDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       technologies: ["Java", "HTML", "CSS", "Javascript"],
     },
     {
@@ -32,14 +31,14 @@ function App() {
       shortDescription:
         "This project aims to make a better world by providing a \
                 way to remove the PT from Brazil, and stuff like that",
-      fullDescription: "This is the full description of Project #1",
+      fullDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       technologies: [
         "Java",
         "JUnit",
         "Spring",
-        "Spring Security",
         "Docker",
         "MySQL",
+        "Spring Security",
         "HMTL",
         "CSS",
         "Javascript",

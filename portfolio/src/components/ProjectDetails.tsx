@@ -7,10 +7,12 @@ export default function ProjectDetails(prop:{selectedProjectIndex:number, select
     return (
         <div id="project-details">
           <div className="project-details-header">
-            <h2 className="tittle">{selectedProject.header}</h2>
+            <h1 className="title">{selectedProject.header}</h1>
 
+
+            {/* USE AN CORROUSEL INSTEAD */}
             <div className="image-cards-rail">
-              <div className="left-arrow"> {"<"} </div>
+              <div className="left-arrow arrows"> {"<"} </div>
               {/* FIRST CARD */}
               <div className="image-cards" key={`p1#img1`}>
                 <img
@@ -26,26 +28,27 @@ export default function ProjectDetails(prop:{selectedProjectIndex:number, select
                 />
               </div>
 
-              <div className="right-arrow"> {">"} </div>
+              <div className="right-arrow arrows"> {">"} </div>
             </div>
           </div>
 
           <div className="project-details-body">
             <p>{selectedProject.fullDescription}</p>
 
+            <h3 className="label">Technologies Used</h3>
             <div className="technologies-used">
               {selectedProject.technologies.map((item) => (
-                <span key={`pd${selectedProjectIndex}#${item}`}>#{item}</span>
+                <span key={`pd${selectedProjectIndex}#${item}`}>{item}</span>
               ))}
             </div>
 
             <div className="available-at">
               <span>
-                <a href={"#deployed-at"}>Deployed On</a>
+                <a href={"#deployed-at"}>Visit Website</a>
               </span>
 
               <span>
-                <a href={"https://github.com/vianavitor-dev"}>Github</a>
+                <a href={"https://github.com/vianavitor-dev"}>Github Repository</a>
               </span>
             </div>
           </div>

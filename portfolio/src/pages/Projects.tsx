@@ -20,22 +20,24 @@ function Projects(prop: {setSelectedProjectIndex: any, projectData:ProjectCard[]
                     key={header}
                     onClick={() => setSelectedProjectIndex(index)}
                   >
-                    <img
+                    <div className="image">
+                      <img
                       loading="lazy"
                       src={imagesUrl}
-                      width={400}
-                      height={250}
                       alt={"First page of the " + header + " project"}
                     />
+                    </div>
 
                     <h3 className="title">{header}</h3>
                     <div className="body">
                       <p>{shortDescription}</p>
 
-                      <div className="technologies-used">
-                        {technologies.map((item) => (
-                          <span key={`p${index}#${item}`}>#{item}</span>
-                        ))}
+                      <div className="technologies-used-container">
+                        <div className="technologies-used">
+                          {technologies.map((item) => (
+                            <span key={`p${index}#${item}`}>#{item}</span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
