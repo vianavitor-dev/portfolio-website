@@ -217,8 +217,38 @@ a {
 
 .card-rail .card {
     height: 450px;
+    position: relative;
     background: whitesmoke;
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, .2);
+    cursor: pointer;
 }
+
+@media (hover:hover) {
+    @keyframes card_rail_hover_animation{
+        0% {
+            box-shadow: 0px 0px var(--gnome-white);
+        }
+        100% {
+            transform: translate(20px, -10px);
+            box-shadow: -20px 12px var(--gnome-white);
+        }
+    }
+
+    .card-rail .card:hover {
+        animation: card_rail_hover_animation .2s forwards ease-in-out;
+    }
+
+    .card-rail .card:hover::after {
+        content: '';
+        position: absolute;
+        opacity: .4;
+        width: 370px;
+        height: 490px;
+        top: -13px;
+        left: -30px;
+    }
+}
+
 
 .card-rail .card .title {
     margin-left: 18px;
@@ -334,6 +364,13 @@ a {
     margin-bottom: 12px;
 }
 
+.project-details-body .label::after {
+    content: "_";
+    font-size: larger;
+    font-weight: 700;
+    animation: current_line_underline_anim 1.5s linear 0s infinite;
+}
+
 .project-details-body .technologies-used {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -383,3 +420,5 @@ a {
 .project-details-body .available-at span a:hover::before {
     content: "/";
 }
+
+
