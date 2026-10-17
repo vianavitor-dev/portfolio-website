@@ -47,12 +47,11 @@ function App() {
     },
   ];
 
-  const page = "projects";
-  const [currentSection, setCurrentSection] = useState(page);
+  const [currentSection, setCurrentSection] = useState("about-me");
 
   const [cmdText, setCmdText] = useState("");
   const [cmdList, setCmdList] = useState([
-    { isCommand: true, text: page },
+    { isCommand: true, text: "about-me" },
   ]);
 
   const handleCmdListChange = (action: "remove" | "add", isCommand = true) => {
@@ -91,7 +90,32 @@ function App() {
     }
   }
 
-   useEffect(() => {
+  const [previousSection, setPreviousSection] = useState("");
+  const handleCurrentSectionChange = (event: KeyboardEvent) => {
+    // console.log(`prev: ${previousSection} | curr: ${currentSection}`);
+
+    if (event.key === "ArrowLeft" && previousSection != "")
+      setCurrentSection(previousSection);
+    
+    if (event.key === "ArrowRight") {
+      setPreviousSection(currentSection);
+      
+      switch (currentSection) {
+        case "about-me": 
+          setCurrentSection("projects");
+          break
+        case "projects": 
+          setCurrentSection("about-me")
+          break;
+        default: 
+          setPreviousSection("");
+          throw new Error(`currentSection '${currentSection}' is invalid!`);
+      }
+    }
+      
+  }
+
+  useEffect(() => {
     if (selectedProjectIndex < 0) return;
 
     const previousOverflow = document.body.style.overflowY;
@@ -103,7 +127,7 @@ function App() {
   }, [selectedProjectIndex]);
 
 
-const RenderSelectedProject = () => {
+  const RenderSelectedProject = () => {
     const selectedProject = projectData[selectedProjectIndex];
 
     return (<>
@@ -135,7 +159,9 @@ const RenderSelectedProject = () => {
 
   return (
     <>
-      <div id="main-container">
+      <div id="main-container" 
+        tabIndex={0}  
+        onKeyDown={(e) => handleCurrentSectionChange(e)}>
         <div className="main-container-content" id="terminal">
           {
             // generate commands

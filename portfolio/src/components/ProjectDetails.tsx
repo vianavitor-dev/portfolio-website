@@ -10,7 +10,7 @@ export default function ProjectDetails(prop:{selectedProjectIndex:number, select
             <h1 className="title">{selectedProject.header}</h1>
 
 
-            {/* USE AN CORROUSEL INSTEAD */}
+            {/* TODO: USE AN CORROUSEL INSTEAD */}
             <div className="image-cards-rail">
               <div className="left-arrow arrows"> {"<"} </div>
               {/* FIRST CARD */}
