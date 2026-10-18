@@ -24,6 +24,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: whitesmoke;
+    overflow: hidden;
 }
 
 #main-container {
@@ -38,6 +39,7 @@ body {
 .main-container-content {
     padding: 1em;
     max-width: 1000px;
+    box-shadow: 0px 0px 2px black;
 }
 
 #terminal {
@@ -50,6 +52,7 @@ body {
     max-width: 1000px;
     width: 600px;
     /* height: 100%; */
+    height: 904.5px;
     max-height: 100%;
     display: flex;
     flex-direction: column;
@@ -111,6 +114,7 @@ body {
 
 #about-me-container, #my-projects-container {
     width: 800px;
+    height: 900px;
 }
 
 p {
@@ -145,9 +149,8 @@ h1.title {
 #my-contacts {
   display: flex;
   justify-content: start; 
-  gap: 5em;
   align-items: end;
-  margin-left: 15px;
+  margin-left: 2px;
   height: 180px;
 }
 
@@ -155,30 +158,26 @@ h1.title {
     transform: translateY(-40px);
 }
 
+.link {
+    font-size: large;
+    width: 200px;
+}
+
+.link a {
+    font-optical-sizing: auto;
+    background: var(--gnome-bmagenta);
+    padding: 3px;
+    padding-right: 10px;
+    font-weight: 700;
+    color: white;
+}
+
 a {
     text-decoration: none;
 }
 
-#my-contacts span a {
-    /* font-family: "Inter", sans-serif; */
-    font-optical-sizing: auto;
-    font-weight: 700;
-    position: relative;
-    display: inline-block;
-    color: var(--gnome-bwhite);
-}
-
-#my-contacts span a::before {
-    content: "";
-    /* color: ; */
-    position: relative;
-    background-color: var(--gnome-bblue);
-    transform: translateY(100%);
-    padding-left: 10px;
-    height: 25px;
-    outline: 5px solid var(--gnome-bblue);
-    display: block;
-    z-index: -1;
+.link a:hover::before {
+    content: "/";
 }
 
 /* # MY PROJECTS PAGE --------------------------------------------------------------------  */
@@ -289,7 +288,7 @@ a {
     width: 100%;
     overflow: hidden;
     font-size: medium;
-    color: var(--gnome-magenta);
+    color: var(--gnome-green);
     padding-left: 2px;
     font-optical-sizing: auto;
     font-weight: 700;
@@ -401,24 +400,8 @@ a {
     align-items: end;
     justify-content: start;
     column-gap: 40px;
-    height: 65px;
-}
-
-.project-details-body .available-at span {
-    width: 200px;
-}
-
-.project-details-body .available-at span a {
-    color: white;
-    background-color: var(--gnome-bmagenta);
-    padding: 2px;
-    padding-right: 8px;
-    font-optical-sizing: auto;
-    font-weight: 700;
-}
-
-.project-details-body .available-at span a:hover::before {
-    content: "/";
+    height: 86px;
+    margin-left: 2px;
 }
 
 

@@ -46,6 +46,7 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
         {
             myContactsItems.map(({value, cmdTxt, url}, index) => (
                 <span key={index}
+                    className="link"
                     onPointerOver={() => onPointerOverCallBack(cmdTxt)}
                     onClick={() => onClickCallBack("add")}
                     onPointerOut={() => onPointerOutCallBack("")}

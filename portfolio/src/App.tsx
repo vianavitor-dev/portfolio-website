@@ -166,7 +166,7 @@ function App() {
           {
             // generate commands
             cmdList
-            .slice(-10)
+            .slice(-28)
             .map((item, index) => createCmd(item, index))
           }
 
