@@ -10,7 +10,7 @@ function App() {
   const projectData: ProjectCard[] = [
     {
       header: "Project #1",
-      imagesUrl: "https://placehold.co/400x250",
+      imagesUrl: "https://chatgpt.com/backend-api/estuary/public_content/enc/eyJpZCI6Im1fNmFkNTMwNGU4NzljODE5MWJlZDYyYmQzZmQ0NGRhMjc6ZmlsZV8wMDAwMDAwMGFjYzg4MjBlOTZkN2E1NGRmYTU0Y2RlNyIsImdpem1vX2lkIjpudWxsLCJ3aWQiOm51bGwsIm9pZCI6bnVsbCwic2lkIjpudWxsLCJjcyI6bnVsbCwiZm4iOm51bGwsImNkIjpudWxsLCJ0cyI6IjIwNzQ0IiwicCI6InB5aSIsImNpZCI6IjEiLCJzaWciOiJjYTZlMTJlYTAwYzdmNmFmMDg5YTg5NjY5ZDA3NDc0YTQwMzcxNTJlMDhhZjFlMzMzMWI4OGY5OGRjN2ZlNDIwIiwidiI6IjAiLCJjZG4iOm51bGwsImNwIjpudWxsLCJtYSI6bnVsbH0=",
       shortDescription:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
       fullDescription: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -18,7 +18,7 @@ function App() {
     },
     {
       header: "Project #2",
-      imagesUrl: "https://placehold.co/400x250",
+      imagesUrl: "https://chatgpt.com/backend-api/estuary/public_content/enc/eyJpZCI6Im1fNmFkNTMwNGU4NzljODE5MWJlZDYyYmQzZmQ0NGRhMjc6ZmlsZV8wMDAwMDAwMGFjYzg4MjBlOTZkN2E1NGRmYTU0Y2RlNyIsImdpem1vX2lkIjpudWxsLCJ3aWQiOm51bGwsIm9pZCI6bnVsbCwic2lkIjpudWxsLCJjcyI6bnVsbCwiZm4iOm51bGwsImNkIjpudWxsLCJ0cyI6IjIwNzQ0IiwicCI6InB5aSIsImNpZCI6IjEiLCJzaWciOiJjYTZlMTJlYTAwYzdmNmFmMDg5YTg5NjY5ZDA3NDc0YTQwMzcxNTJlMDhhZjFlMzMzMWI4OGY5OGRjN2ZlNDIwIiwidiI6IjAiLCJjZG4iOm51bGwsImNwIjpudWxsLCJtYSI6bnVsbH0=",
       shortDescription:
         "This project aims to make a better world by providing a \
                 way to remove the PT from Brazil, and stuff like that",
@@ -27,7 +27,7 @@ function App() {
     },
     {
       header: "Project #3",
-      imagesUrl: "https://placehold.co/400x250",
+      imagesUrl: "https://chatgpt.com/backend-api/estuary/public_content/enc/eyJpZCI6Im1fNmFkNTMwNGU4NzljODE5MWJlZDYyYmQzZmQ0NGRhMjc6ZmlsZV8wMDAwMDAwMGFjYzg4MjBlOTZkN2E1NGRmYTU0Y2RlNyIsImdpem1vX2lkIjpudWxsLCJ3aWQiOm51bGwsIm9pZCI6bnVsbCwic2lkIjpudWxsLCJjcyI6bnVsbCwiZm4iOm51bGwsImNkIjpudWxsLCJ0cyI6IjIwNzQ0IiwicCI6InB5aSIsImNpZCI6IjEiLCJzaWciOiJjYTZlMTJlYTAwYzdmNmFmMDg5YTg5NjY5ZDA3NDc0YTQwMzcxNTJlMDhhZjFlMzMzMWI4OGY5OGRjN2ZlNDIwIiwidiI6IjAiLCJjZG4iOm51bGwsImNwIjpudWxsLCJtYSI6bnVsbH0=",
       shortDescription:
         "This project aims to make a better world by providing a \
                 way to remove the PT from Brazil, and stuff like that",
