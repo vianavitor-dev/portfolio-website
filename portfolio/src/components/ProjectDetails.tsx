@@ -48,11 +48,11 @@ export default function ProjectDetails(prop:{selectedProjectIndex:number, select
 
             <div className="available-at">
               <span className="link">
-                <a href={"#deployed-at"}>Visit Website</a>
+                <a href={"#deployed-at"}>Visit Website →</a>
               </span>
 
               <span className="link">
-                <a href={"https://github.com/vianavitor-dev"}>Github Repository</a>
+                <a href={"https://github.com/vianavitor-dev"}>Github Repository →</a>
               </span>
             </div>
           </div>

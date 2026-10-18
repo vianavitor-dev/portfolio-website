@@ -115,7 +115,7 @@ body {
     height: 910px;
 }
 
-/* # ABOUT ME PAGE ------------------------------------------------------------------------------------------  */
+/* # ABOUT ME PAGE ----------------------------------------------------------------------------------------------  */
 p {
     max-width: 95%;
     text-align: justify;
@@ -178,9 +178,37 @@ h1.title {
     content: "/";
 }
 
-/* # MY PROJECTS PAGE -----------------------------------------------------------------------------------------  */
+/* # ABOUT ME PAGE > MY TECHNOLOGIES STACK  ---------------------------------------------------------------------  */
+#my-tech-stack .title {
+    transform: translateY(15px);
+}
+
+.label {
+    font-family: "JetBrains Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-size: large;
+}
+
+.label .user-at-machine, 
+.label .user-at-machine-symbol {
+    color: var(--gnome-bwhite);
+    background-color: var(--gnome-green);
+    padding: 2px;
+    padding-left: 4px;
+}
+
+.label .user-at-machine-symbol {
+    margin-right: 8px;
+}
+
+/* # MY PROJECTS PAGE --------------------------------------------------------------------------------------------  */
 #my-projects-container {
     margin-top: 0;
+}
+
+#my-projects p {
+    margin-bottom: 30px;
 }
 
 .card-container {
@@ -303,7 +331,7 @@ h1.title {
     right: 0%;
 }
 
-/* # MY PROJECTS PAGE > PROJECT DETAILS  ---------------------------------------------------------------------  */
+/* # MY PROJECTS PAGE > PROJECT DETAILS  --------------------------------------------------------------------------  */
 #project-details {
     background-color: whitesmoke;
     position: fixed;
@@ -398,26 +426,6 @@ h1.title {
     margin-left: 2px;
 }
 
-/* # MY TECHNOLOGIES STACK  ---------------------------------------------------------------------  */
-#my-tech-stack .title {
-    transform: translateY(15px);
-}
-
-.label {
-    font-family: "JetBrains Mono", monospace;
-    font-optical-sizing: auto;
-    font-weight: 800;
-    font-size: large;
-}
-
-.label .user-at-machine, 
-.label .user-at-machine-symbol {
-    color: var(--gnome-bwhite);
-    background-color: var(--gnome-green);
-    padding: 2px;
-    padding-left: 4px;
-}
-
-.label .user-at-machine-symbol {
-    margin-right: 8px;
+.project-details-body .available-at .link {
+    width: 230px;
 }

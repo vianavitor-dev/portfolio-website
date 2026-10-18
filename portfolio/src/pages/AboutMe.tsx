@@ -8,7 +8,7 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
             url: "https://mail.google.com/mail?view=cm&fs=1&to=vianvitor232@gmail.com"
         },
         {
-            value: "LikedIn",
+            value: "LinkedIn",
             cmdTxt: "cd linkedin-profile",
             url: "https://www.linkedin.com/in/vitor-hugo-marques-viana"
         },
@@ -25,20 +25,19 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
         <p id="greetings" className="sub-title">| Welcome to my portfolio!</p>
 
         <h1 className="title">
-          I'm Vitor a <span id="my-job">Software Developer</span>
+          I'm Vitor a <span id="my-job">Java Backend Developer</span>
         </h1>
 
         <p>
-          Since I've started learning programming I always found myself doing
-          personal projects to improve my skills, and this has been of great
-          help! Searching for altenative methods, learning and including
-          technologies that would enchance the project, attemping to make my
-          code efficient, all of that are part of my core toughts when codding.
+          Since I started learning programming, I've always enjoyed building personal projects to improve my skills 
+          and explore new ideas. I like searching for different approaches, experimenting with technologies that could 
+          improve a project, and finding ways to make my code more efficient. These are some of the things I keep in mind 
+          whenever I'm coding.
         </p>
         <p>
-          On this portfolio I wraped up some relevant projects that I could
-          learn with while building them, alongside with the technologies used
-          and skills learned in this process.
+          On this portfolio, I've put together some of my most relevant projects, along with the technologies I've used 
+          and the skills I've developed while building them. Each project represents an opportunity to learn something new, 
+          put my knowledge into practice, and keep improving as a developer.
         </p>
       </div>
 
@@ -85,7 +84,7 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
                     onAuxClick={() => onClickCallBack("add")}
                 >
                     <a href={url}>
-                        {value}
+                        {value + " →"}
                     </a>
                 </span>
             ))

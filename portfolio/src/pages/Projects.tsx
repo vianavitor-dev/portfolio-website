@@ -11,7 +11,11 @@ function Projects(prop: {setSelectedProjectIndex: any, projectData:ProjectCard[]
         <div id="my-projects">
           <h2 className="sub-title">| More projects coming soon!</h2>
           <h1 className="title">My Projects</h1>
-
+          <p>
+            Here are some of the projects I've worked on, where I've put my knowledge into practice, 
+            explored new technologies, and worked through different challenges. Each project has helped me 
+            improve my skills and learn something new along the way.
+          </p>
           <div className="card-container">
             <div className="card-rail">
               {projectData.map(({ header, shortDescription, imagesUrl, technologies }, index) => (
