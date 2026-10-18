@@ -25,7 +25,7 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
         <p id="greetings" className="sub-title">| Welcome to my portfolio!</p>
 
         <h1 className="title">
-          I'm Vitor an <span id="my-job">Software Developer</span>
+          I'm Vitor a <span id="my-job">Software Developer</span>
         </h1>
 
         <p>

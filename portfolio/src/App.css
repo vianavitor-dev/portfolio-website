@@ -24,7 +24,6 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: whitesmoke;
-    /* overflow: hidden; */
 }
 
 #main-container {
@@ -61,9 +60,6 @@ body {
     align-items: start;
     gap: 8px;
 }
-
-/* #terminal .line {
-} */
 
 .user-at-machine, .user-at-machine-symbol {
     color: var(--gnome-green);
@@ -138,7 +134,6 @@ p {
 h1.title {
     font-weight: 700;
     margin-bottom: 40px;
-    /* margin-top: 100px; */
 }
 
 #about-me span#my-job {
@@ -169,15 +164,13 @@ h1.title {
 }
 
 .link a {
-    font-optical-sizing: auto;
     background: var(--gnome-bmagenta);
-    padding: 3px;
+    padding: 8px;
     padding-right: 10px;
     font-weight: 700;
     color: white;
-}
-
-a {
+    letter-spacing: 2%;
+    box-shadow: 0px 0px 5px rgba(99, 15, 84, 0.2);
     text-decoration: none;
 }
 
@@ -359,9 +352,6 @@ a {
     text-align: justify;
 }
 
-/* .project-details-body p {
-    display: contents;
-} */
 
 .label {
     margin-top: 30px;
