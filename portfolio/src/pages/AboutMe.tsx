@@ -42,6 +42,38 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
         </p>
       </div>
 
+      <div id="my-tech-stack">
+        <h2 className="title">My Technologies Stack</h2>
+
+        <div className="tech-item" id="main-techs">
+          <h3 className="label">
+            <span className="user-at-machine">guest@portfolio:</span>
+            <span className="user-at-machine-symbol">~$</span>
+              Main Stack
+          </h3>
+
+          <div className="simple-terminal-table">
+            <span>Java</span> <span>Spring Boot</span> <span>Spring Security</span>
+            <span>REST API</span> <span>Jason Web Token</span> <span>JUnit</span> 
+            <span>Mockito</span> <span>MySQL</span> <span>Docker</span> 
+            <span>Git</span> <span>GitHub Actions {"(CI/CD)"} </span>
+          </div>
+        </div>
+        <div className="tech-item" id="extra-techs">
+          <h3 className="label">
+            <span className="user-at-machine">guest@portfolio:</span>
+            <span className="user-at-machine-symbol">~$</span>
+            Complementary Stack
+          </h3>
+
+          <div className="simple-terminal-table">
+            <span>JavaScript</span> <span>React</span> <span>MuleSoft</span> 
+            <span>PHP</span> <span>Python</span> <span>C#</span> <span>HTML</span>
+            <span>CSS</span> 
+          </div>
+        </div>
+      </div>
+
       <div id="my-contacts">
         {
             myContactsItems.map(({value, cmdTxt, url}, index) => (

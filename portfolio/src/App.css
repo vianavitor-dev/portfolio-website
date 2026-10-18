@@ -24,7 +24,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: whitesmoke;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 #main-container {
@@ -50,9 +50,10 @@ body {
     background-color: var(--gnome-backgrond-color);
     color: var(--gnome-white);
     max-width: 1000px;
-    width: 600px;
+    /* width: 600px; */
+    width: 33%;
     /* height: 100%; */
-    height: 904.5px;
+    height: 915px;
     max-height: 100%;
     display: flex;
     flex-direction: column;
@@ -64,7 +65,7 @@ body {
 /* #terminal .line {
 } */
 
-#terminal .user-at-machine, #terminal .user-at-machine-symbol {
+.user-at-machine, .user-at-machine-symbol {
     color: var(--gnome-green);
     /* font-weight: 400; */
     font-weight: bold;
@@ -72,7 +73,7 @@ body {
 
 
 @media screen and (max-width: 850px) {
-    #terminal .user-at-machine {
+    .user-at-machine {
         display: none;
     }
 }
@@ -113,12 +114,14 @@ body {
 }
 
 #about-me-container, #my-projects-container {
-    width: 800px;
-    height: 900px;
+    /* width: 800px; */
+    width: 42%;
+    height: 910px;
 }
 
+/* # ABOUT ME PAGE ------------------------------------------------------------------------------------------  */
 p {
-    max-width: 90%;
+    max-width: 95%;
     text-align: justify;
 }
 
@@ -149,13 +152,15 @@ h1.title {
 #my-contacts {
   display: flex;
   justify-content: start; 
-  align-items: end;
+  align-items: center;
   margin-left: 2px;
   height: 180px;
 }
 
-#my-contacts span {
-    transform: translateY(-40px);
+@media screen and (max-width: 1200px) {
+    #my-contacts span {
+        transform: translateY(-22px);
+    }
 }
 
 .link {
@@ -180,7 +185,7 @@ a {
     content: "/";
 }
 
-/* # MY PROJECTS PAGE --------------------------------------------------------------------  */
+/* # MY PROJECTS PAGE -----------------------------------------------------------------------------------------  */
 #my-projects-container {
     margin-top: 0;
 }
@@ -305,7 +310,7 @@ a {
     right: 0%;
 }
 
-/* # MY PROJECTS PAGE | PROJECT DETAILS  ---------------------------------------------------------  */
+/* # MY PROJECTS PAGE > PROJECT DETAILS  ---------------------------------------------------------------------  */
 #project-details {
     background-color: whitesmoke;
     position: fixed;
@@ -354,25 +359,25 @@ a {
     text-align: justify;
 }
 
-.project-details-body p {
+/* .project-details-body p {
     display: contents;
-}
+} */
 
-.project-details-body .label {
+.label {
     margin-top: 30px;
     margin-bottom: 12px;
 }
 
-.project-details-body .label::after {
+.label::after {
     content: "_";
     font-size: larger;
     font-weight: 700;
     animation: current_line_underline_anim 1.5s linear 0s infinite;
 }
 
-.project-details-body .technologies-used {
+.project-details-body .technologies-used, .simple-terminal-table {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     grid-template-rows: 1fr;
     background-color: var(--gnome-backgrond-color);
     padding-bottom: 8px;
@@ -383,9 +388,8 @@ a {
     gap: 20px;   
 }
 
-.project-details-body .technologies-used span {
+.project-details-body .technologies-used span, .simple-terminal-table span {
     color: var(--gnome-white);
-    background-color: var(--gnome-backgrond-color);
     overflow: hidden;
     font-family: "JetBrains Mono", monospace;
     font-optical-sizing: auto;
@@ -404,4 +408,26 @@ a {
     margin-left: 2px;
 }
 
+/* # MY TECHNOLOGIES STACK  ---------------------------------------------------------------------  */
+#my-tech-stack .title {
+    transform: translateY(15px);
+}
 
+.label {
+    font-family: "JetBrains Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-size: large;
+}
+
+.label .user-at-machine, 
+.label .user-at-machine-symbol {
+    color: var(--gnome-bwhite);
+    background-color: var(--gnome-green);
+    padding: 2px;
+    padding-left: 4px;
+}
+
+.label .user-at-machine-symbol {
+    margin-right: 8px;
+}

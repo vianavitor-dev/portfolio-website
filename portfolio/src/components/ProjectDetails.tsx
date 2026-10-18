@@ -35,7 +35,11 @@ export default function ProjectDetails(prop:{selectedProjectIndex:number, select
           <div className="project-details-body">
             <p>{selectedProject.fullDescription}</p>
 
-            <h3 className="label">Technologies Used</h3>
+            <h3 className="label">
+              {/* <span className="user-at-machine">guest@portfolio:</span> */}
+              <span className="user-at-machine-symbol">~$</span>
+              Technologies Used
+            </h3>
             <div className="technologies-used">
               {selectedProject.technologies.map((item) => (
                 <span key={`pd${selectedProjectIndex}#${item}`}>{item}</span>
