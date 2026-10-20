@@ -20,7 +20,7 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
     ];
 
   return (
-    <div className="main-container-content" id="about-me-container">
+    <>
       <div id="about-me">
         <p id="greetings" className="sub-title">| Welcome to my portfolio!</p>
 
@@ -90,7 +90,7 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
             ))
         }
       </div>
-    </div>
+    </>
   );
 }
 

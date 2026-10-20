@@ -6,8 +6,7 @@ function Projects(prop: {setSelectedProjectIndex: any, projectData:ProjectCard[]
   const setSelectedProjectIndex = prop.setSelectedProjectIndex;
   const projectData = prop.projectData;
   return (
-    <>
-      <div className="main-container-content" id="my-projects-container">
+
         <div id="my-projects">
           <h2 className="sub-title">| More projects coming soon!</h2>
           <h1 className="title">My Projects</h1>
@@ -50,8 +49,7 @@ function Projects(prop: {setSelectedProjectIndex: any, projectData:ProjectCard[]
             </div>
           </div>
         </div>
-      </div>
-    </>
+
   );
 }
 

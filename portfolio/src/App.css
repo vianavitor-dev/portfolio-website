@@ -37,6 +37,8 @@ body {
 
 .main-container-content {
     padding: 1em;
+    width: 42%;
+    height: 910px;
     max-width: 1000px;
     box-shadow: 0px 0px 2px black;
 }
@@ -99,7 +101,7 @@ body {
 }
 
 
-#about-me-container, #my-projects-container, #project-details {
+.main-container-content, #project-details {
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     color: var(--gnome-black);
@@ -107,12 +109,6 @@ body {
     font-style: normal;
     font-size: large;
     /* background-color: #AD7FA8;  */
-}
-
-#about-me-container, #my-projects-container {
-    /* width: 800px; */
-    width: 42%;
-    height: 910px;
 }
 
 /* # ABOUT ME PAGE ----------------------------------------------------------------------------------------------  */
