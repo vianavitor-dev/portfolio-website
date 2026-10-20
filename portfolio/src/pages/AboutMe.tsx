@@ -81,7 +81,7 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
                     onPointerOver={() => onPointerOverCallBack(cmdTxt)}
                     onClick={() => onClickCallBack("add")}
                     onPointerOut={() => onPointerOutCallBack("")}
-                    onAuxClick={() => onClickCallBack("add")}
+                    onAuxClick={() => onClickCallBack("add", cmdTxt)}
                 >
                     <a href={url}>
                         {value + " →"}

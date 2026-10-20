@@ -60,10 +60,10 @@ function App() {
     { isCommand: true, text: "about-me" },
   ]);
 
-  const handleCmdListChange = (action: "remove" | "add", isCommand = true) => {
+  const handleCmdListChange = (action: "remove" | "add", text = cmdText, isCommand = true) => {
     switch (action) {
       case "add": {
-        const cmd = { isCommand: isCommand, text: cmdText };
+        const cmd = { isCommand: isCommand, text: text };
 
         setCmdList([...cmdList, cmd]);
         break;
@@ -218,8 +218,7 @@ function App() {
         </div>
 
         <div className="main-container-content" ref={mainContainerContentRef}>
-          <div 
-            className="nextPageTop" 
+          <div className="nextPageTop" 
             ref={nextPageTopRef}
             style={{
               display: (currentSection === "projects") ? "block" : "none",
@@ -234,8 +233,7 @@ function App() {
             }}>
           </div>
           {renderCurrentSectionPage()}
-          <div 
-            className="nextPageBottom" 
+          <div className="nextPageBottom" 
             ref={nextPageBottomRef}
             style={{
               display: (currentSection === "about-me") ? "block" : "none",
