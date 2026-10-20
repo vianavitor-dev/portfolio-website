@@ -1,13 +1,28 @@
-import {} from "react";
+import React, { useEffect } from "react";
 import type {ProjectCard} from "../common/PublicInterfaces";
 
 function Projects(prop: {setSelectedProjectIndex: any, projectData:ProjectCard[]}) {
   //
   const setSelectedProjectIndex = prop.setSelectedProjectIndex;
   const projectData = prop.projectData;
-  return (
+  const ref = React.useRef<HTMLDivElement>(null);
 
-        <div id="my-projects">
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setSelectedProjectIndex(-1);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [setSelectedProjectIndex]);
+  
+  return (
+        <div id="my-projects" ref={ref}>
           <h2 className="sub-title">| More projects coming soon!</h2>
           <h1 className="title">My Projects</h1>
           <p>

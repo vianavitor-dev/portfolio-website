@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import AboutMe from "./pages/AboutMe";
 import Projects from "./pages/Projects";
 import type { CommandInterface, ProjectCard } from "./common/PublicInterfaces";
 import ProjectDetails from "./components/ProjectDetails";
+import useIsVisible from "./hooks/useIsVisible";
 
 function App() {
   const projectData: ProjectCard[] = [
@@ -78,38 +79,13 @@ function App() {
   };
 
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(-1);
-  const renderCurrentSectionPage = () => {
-    switch (currentSection) {
-      case "about-me":
-        return (
-          <AboutMe
-            onPointerOverCallBack={setCmdText}
-            onClickCallBack={handleCmdListChange}
-            onPointerOutCallBack={setCmdText}
-          />
-        );
-      case "projects":
-        return (
-          <Projects
-            setSelectedProjectIndex={setSelectedProjectIndex}
-            projectData={projectData}
-          />
-        );
-      // case "skills":
-    }
-  };
 
-  useEffect(() => {
-    if (selectedProjectIndex < 0) return;
+  const mainContainerContentRef = React.useRef<HTMLDivElement>(null);
+  const nextPageBottomRef = React.useRef<HTMLDivElement>(null);
+  const nextPageTopRef = React.useRef<HTMLDivElement>(null);
 
-    const previousOverflow = document.body.style.overflowY;
-    document.body.style.overflowY = "hidden";
-
-    return () => {
-      document.body.style.overflowY = previousOverflow;
-    };
-  }, [selectedProjectIndex]);
-
+  const isNextPageBottomVisible = useIsVisible(nextPageBottomRef);
+  const isNextPageTopVisible = useIsVisible(nextPageTopRef);
 
   const debounce = (func: (...args: any[]) => void, waitTime: number) => {
     let timeout;
@@ -125,28 +101,73 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    const handleCurrentSectionChange = debounce(
+  const handleCurrentSectionChange = debounce(
       () => {
         switch (currentSection) {
           case "about-me":
+            mainContainerContentRef.current?.scrollTo({
+                top: 200,
+                left: 0,
+                behavior: "instant",
+            });
+
             setCurrentSection("projects");
             break;
           case "projects":
+            mainContainerContentRef.current?.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "instant",
+            });
+
             setCurrentSection("about-me");
             break;
           default:
             throw new Error(`currentSection '${currentSection}' is invalid!`);
         }
-      }, 100
-    )
+  }, 500);
 
-    document.addEventListener("scroll", handleCurrentSectionChange);
+  useEffect(() => {
+    if (isNextPageTopVisible || isNextPageBottomVisible) {
+      handleCurrentSectionChange();
+    }
 
-    return (() => {
-      document.removeEventListener("scroll", handleCurrentSectionChange);
-    });
-  }, [currentSection]); 
+  }, [isNextPageBottomVisible, isNextPageTopVisible]);
+
+
+  const renderCurrentSectionPage = () => {
+    switch (currentSection) {
+      case "about-me":
+        return (
+          <AboutMe
+            onPointerOverCallBack={setCmdText}
+            onClickCallBack={handleCmdListChange}
+            onPointerOutCallBack={setCmdText}
+          />
+        );
+      case "projects":
+        console.log("renderCurrentSectionPage: ", currentSection);  
+        return (
+          <Projects
+            setSelectedProjectIndex={setSelectedProjectIndex}
+            projectData={projectData}
+          />
+        );
+      case "skills":
+    }
+  };
+
+  useEffect(() => {
+    if (selectedProjectIndex < 0) return;
+
+    const previousOverflow = document.body.style.overflowY;
+    document.body.style.overflowY = "hidden";
+
+    return () => {
+      document.body.style.overflowY = previousOverflow;
+    };
+  }, [selectedProjectIndex]);
+
 
   const RenderSelectedProject = () => {
     const selectedProject = projectData[selectedProjectIndex];
@@ -196,8 +217,37 @@ function App() {
           </div>
         </div>
 
-        <div className="main-container-content">
-        {renderCurrentSectionPage()}
+        <div className="main-container-content" ref={mainContainerContentRef}>
+          <div 
+            className="nextPageTop" 
+            ref={nextPageTopRef}
+            style={{
+              display: (currentSection === "projects") ? "block" : "none",
+              marginBottom: "150px",
+              // backgroundColor: "red",
+              width: "100%",
+              height: "20px",
+              position: "relative",
+              top: "0px",
+              left: 0,
+              overflow: "hidden"
+            }}>
+          </div>
+          {renderCurrentSectionPage()}
+          <div 
+            className="nextPageBottom" 
+            ref={nextPageBottomRef}
+            style={{
+              display: (currentSection === "about-me") ? "block" : "none",
+              marginTop: "100px",
+              width: "100%",
+              height: "20px",
+              position: "relative",
+              bottom: 0,
+              left: 0,
+              overflow: "hidden"
+            }}>
+          </div>
         </div>
       </div>
 
