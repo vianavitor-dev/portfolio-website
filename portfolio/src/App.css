@@ -32,7 +32,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: start;
-    transform: translateY(2.2em);
+    transform: translateY(2%);
     width: 100vw;
     height: 100vh;
 }
@@ -442,49 +442,11 @@ h1.title {
     width: 230px;
 }
 
-@media screen and (max-width: 1400px) {
-    .main-container-content {
-        width: 50%;
-        /* height: 100%; */
-    }
-}
-
 @media screen and (max-height: 850px) {
     #main-container {
-        transform: translateY(0px);
+        transform: translateY(0px); 
         height: 100vh;
         overflow-x: hidden;
-    }
-}
-
-@media screen and (max-width: 1100px) {
-    #main-container {
-        transform: translateY(0px);
-        height: 100vh;
-        overflow-x: hidden;
-    }
-
-    .main-container-content {
-        width: 100vw;
-        height: 100vh;
-        max-width: none;
-        box-shadow: none;
-    }
-
-    #terminal {
-        height: 100vh;
-    }
-
-    body {
-        /* overflow-y: auto; */
-    }
-
-    .nextPageTop {
-        margin-bottom: 200px !important;
-    }
-
-    .nextPageBottom {
-        margin-top: 200px !important;
     }
 }
 
