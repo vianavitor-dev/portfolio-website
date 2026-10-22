@@ -48,11 +48,19 @@ export default function ProjectDetails(prop:{selectedProjectIndex:number, select
 
             <div className="available-at">
               <span className="link">
-                <a href={"#deployed-at"}>Visit Website →</a>
+                <a 
+                  href={selectedProject.deployedUrl} 
+                  className={(selectedProject.deployedUrl != null) ? "active" : ""}
+                  title={(selectedProject.deployedUrl != null) ? "Visit the website" : "Website not available"}
+                >Visit Website →</a>
               </span>
 
               <span className="link">
-                <a href={"https://github.com/vianavitor-dev"}>Github Repository →</a>
+                <a
+                  href={selectedProject.githubUrl}
+                  className={(selectedProject.githubUrl != null) ? "active" : ""}
+                  title={(selectedProject.githubUrl != null) ? "Visit the GitHub repository" : "GitHub repository not available"}
+                >Github Repository →</a>
               </span>
             </div>
           </div>

@@ -5,6 +5,8 @@ export interface ProjectCard {
   shortDescription: string;
   fullDescription: string;
   technologies: string[];
+  deployedUrl: string;
+  githubUrl: string;
 }
 
 export interface CommandInterface {

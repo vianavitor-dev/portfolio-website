@@ -126,7 +126,6 @@ function App() {
 
   const RenderSelectedProject = () => {
     const selectedProject = projectData[selectedProjectIndex];
-
     return (
       <>
         <div
