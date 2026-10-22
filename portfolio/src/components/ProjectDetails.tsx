@@ -36,7 +36,7 @@ export default function ProjectDetails(prop:{selectedProjectIndex:number, select
             <p>{selectedProject.fullDescription}</p>
 
             <h3 className="label">
-              {/* <span className="user-at-machine">guest@portfolio:</span> */}
+              <span className="user-at-machine">guest@portfolio:</span>
               <span className="user-at-machine-symbol">~$</span>
               Technologies Used
             </h3>
