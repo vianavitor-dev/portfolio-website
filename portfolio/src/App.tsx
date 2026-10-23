@@ -5,6 +5,7 @@ import Projects from "./pages/Projects";
 import type { CommandInterface, ProjectCard } from "./common/PublicInterfaces";
 import ProjectDetails from "./components/ProjectDetails";
 import useProjectDataReader from "./hooks/useProjectDataReader";
+import PageNavigation from "./components/PageNavigation";
 
 function App() {
   const projectData: ProjectCard[] | null = useProjectDataReader();
@@ -30,6 +31,11 @@ function App() {
     {isCommand: false, text: "'about-me' page successfuly rendered"},
     {isCommand: false, text: "current page => about-me"}
   ]);
+
+  const navigateTo = (page: Section) => {
+    setSelectedProjectIndex(-1);
+    setCurrentSection(page);
+  }
 
   const handleCmdListChange = (text = cmdText, isCommand = true, auxResponse: (...args: never[]) => string[] = () => []) => {    
     const cmd = { isCommand: isCommand, text: text } as CommandInterface;
@@ -75,7 +81,7 @@ function App() {
           ];
       }
       else if (cmd.text === "about-me" || cmd.text === "projects") {
-        setCurrentSection(cmd.text);
+        navigateTo(cmd.text);
         response = [
           `'${cmd.text}' page successfuly rendered`,
           `current page => ${cmd.text}`
@@ -119,7 +125,7 @@ function App() {
       
       if (event.key == "\\") {
         isWriting = true;
-        
+
         document.querySelectorAll("a").forEach((item) => item.blur());
 
         currentLineRef.current?.focus();
@@ -166,7 +172,7 @@ function App() {
           />
         );
       case "projects":
-        console.log("renderCurrentSectionPage: ", currentSection);  
+        // console.log("renderCurrentSectionPage: ", currentSection);  
         return (
           <Projects
             setSelectedProjectIndex={setSelectedProjectIndex}
@@ -200,6 +206,7 @@ function App() {
         <ProjectDetails
           selectedProject={selectedProject}
           selectedProjectIndex={selectedProjectIndex}
+          onClose={() => setSelectedProjectIndex(-1)}
         />
       </>
     );
@@ -239,6 +246,8 @@ function App() {
           {renderCurrentSectionPage()}
         </div>
       </div>
+
+      <PageNavigation currentPage={currentSection} onNavigate={navigateTo} />
 
       {selectedProjectIndex != -1 ? RenderSelectedProject() : null}
     </>
