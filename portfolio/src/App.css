@@ -17,6 +17,11 @@
     --gnome-bred: #EF2929;
     --btn-color: #1111;
 
+    --primary-color: var(--gnome-green);
+    --primary-font-color: var(--gnome-black);
+    --secondary-font-color: var(--gnome-bblack);
+    --interactive-element-color: var(--gnome-bmagenta);
+
     background: #f9f2f2;
 }
 
@@ -84,8 +89,8 @@ body {
     margin-left: 1em;
 }
 
-#terminal .command .text {
-    color: var(--gnome-cyan);
+#terminal .response .error {
+    color: var(--gnome-bred);
 }
 
 @keyframes current_line_underline_anim {
@@ -529,4 +534,347 @@ h1.title {
         height: 80%;
         overflow-y: auto;
     }
+}
+
+
+/* =========================================
+   RESPONSIVE LAYOUT
+   Preserves the existing portfolio design
+   ========================================= */
+
+/* Keep sizing predictable */
+#main-container,
+#main-container *,
+#project-details,
+#project-details * {
+  box-sizing: border-box;
+}
+
+/* Desktop: terminal and content side by side */
+#main-container {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding: 16px;
+  gap: 0;
+  align-items: stretch;
+  transform: none;
+}
+
+#main-container > .main-container-content {
+  height: 100%;
+  min-height: 0;
+}
+
+#terminal {
+  flex: 0 0 32%;
+  width: auto;
+  min-width: 0;
+  max-width: 420px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#main-container > .main-container-content:not(#terminal) {
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* Don't shift the Projects page at intermediate widths */
+@media screen and (max-width: 1100px) {
+  #my-projects {
+    transform: none;
+  }
+
+  #main-container {
+    padding: 12px;
+  }
+
+  #main-container > .main-container-content:not(#terminal) {
+    padding: 24px;
+  }
+}
+
+/* =========================================
+   RESPONSIVE PROJECT CARDS
+   ========================================= */
+
+.card-container {
+  width: 100%;
+  height: auto;
+  min-width: 0;
+}
+
+.card-container .card-rail {
+  width: 100%;
+  height: auto;
+  min-width: 0;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  padding: 24px;
+  gap: 24px;
+}
+
+/* Keep the existing card appearance and proportions */
+.card-rail .card {
+  flex: 0 0 clamp(250px, 30vw, 350px);
+  width: auto;
+  min-width: 0;
+  height: auto;
+  min-height: 420px;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+/* Responsive image area */
+.card-rail .card .image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 8 / 5;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.card-rail .card .image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Allow card content to use available space */
+.card-rail .card .body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  padding: 16px;
+}
+
+.card-rail .card .title {
+  overflow-wrap: anywhere;
+}
+
+.card-rail .card .body p {
+  height: auto;
+  min-height: 60px;
+  max-height: 110px;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.card-rail .card .body .technologies-used-container {
+  width: 100%;
+  height: auto;
+  min-height: 50px;
+  margin-top: auto;
+}
+
+.card-rail .card .body .technologies-used {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 8px 12px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.card-rail .card .body .technologies-used span {
+  width: auto;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   PROJECT DETAILS MODAL
+   ========================================= */
+
+#project-details {
+  box-sizing: border-box;
+  width: min(900px, calc(100vw - 32px));
+  max-width: 100%;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px);
+  min-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+#project-details img {
+  max-width: 100%;
+  height: auto;
+}
+
+#project-details .project-details-header,
+#project-details .project-details-body {
+  min-width: 0;
+  max-width: 100%;
+}
+
+#project-details .image-cards-rail {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+#project-details .image-cards {
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+#project-details .available-at {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+/* =========================================
+   TABLETS AND MOBILE
+   ========================================= */
+
+@media screen and (max-width: 860px) {
+  /*
+   * Preserve the two existing panels, but stack them.
+   * The content panel remains the scroll container.
+   */
+  #main-container {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    padding: 0;
+    overflow: hidden;
+    transform: none;
+  }
+
+  #terminal {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 42px;
+    max-height: 100px;
+    padding: 8px 12px;
+    gap: 4px;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  #terminal .line {
+    max-width: 100%;
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+
+  #main-container > .main-container-content:not(#terminal) {
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: none;
+    height: auto;
+    min-height: 0;
+    padding: 22px 18px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-left: 1px solid #d8d5d5;
+  }
+
+  #my-projects {
+    height: auto;
+    min-height: 100%;
+    transform: none;
+  }
+
+  #my-projects p {
+    max-width: 100%;
+  }
+
+  /* Cards remain horizontally swipeable */
+  .card-container {
+    height: auto;
+  }
+
+  .card-container .card-rail {
+    height: auto;
+    padding: 18px 16px 22px 4px;
+    gap: 18px;
+  }
+
+  .card-rail .card {
+    flex-basis: clamp(240px, 78vw, 320px);
+    min-height: 0;
+  }
+
+  .card-rail .card .image {
+    aspect-ratio: 8 / 5;
+  }
+
+  .card-rail .card .body {
+    padding: 14px;
+  }
+
+  /* Keep the modal inside the visible screen */
+  #project-details {
+    width: calc(100vw - 24px);
+    max-width: none;
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+    padding: 18px;
+  }
+
+  #project-details .image-cards img {
+    width: min(400px, 68vw);
+    height: auto;
+    aspect-ratio: 8 / 5;
+    object-fit: cover;
+  }
+}
+
+/* Very narrow phones */
+@media screen and (max-width: 400px) {
+  #main-container > .main-container-content:not(#terminal) {
+    padding: 18px 14px;
+  }
+
+  #my-projects .title {
+    overflow-wrap: anywhere;
+  }
+
+  .card-container .card-rail {
+    padding-right: 10px;
+    gap: 14px;
+  }
+
+  .card-rail .card {
+    flex-basis: 84vw;
+  }
+
+  #project-details {
+    padding: 14px;
+  }
+}
+
+/* Use hover effects only on devices that support hover */
+@media (hover: none) {
+  .card-rail .card:hover {
+    animation: none;
+    transform: none;
+  }
 }

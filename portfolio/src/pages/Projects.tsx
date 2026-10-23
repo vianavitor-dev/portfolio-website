@@ -41,7 +41,7 @@ function Projects(prop: {setSelectedProjectIndex: any, projectData:ProjectCard[]
                     <div className="image">
                       <img
                       loading="lazy"
-                      src={imagesUrl}
+                      src={imagesUrl[0]}
                       alt={"First page of the " + header + " project"}
                     />
                     </div>

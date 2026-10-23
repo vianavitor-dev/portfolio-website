@@ -1,6 +1,6 @@
 import {} from "react";
 
-function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack}) {
+function AboutMe({onPointerOver, onClick, onPointerOut}) {
     const myContactsItems = [
         {
             value: "Email",
@@ -78,10 +78,10 @@ function AboutMe({onPointerOverCallBack, onClickCallBack, onPointerOutCallBack})
             myContactsItems.map(({value, cmdTxt, url}, index) => (
                 <span key={index}
                     className="link"
-                    onPointerOver={() => onPointerOverCallBack(cmdTxt)}
-                    onClick={() => onClickCallBack("add")}
-                    onPointerOut={() => onPointerOutCallBack("")}
-                    onAuxClick={() => onClickCallBack("add", cmdTxt)}
+                    onPointerOver={() => onPointerOver(cmdTxt)}
+                    onClick={() => onClick()}
+                    onPointerOut={() => onPointerOut("")}
+                    onAuxClick={() => onClick(cmdTxt)}
                 >
                     <a href={url} className="active">
                         {value + " →"}
