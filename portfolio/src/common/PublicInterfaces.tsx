@@ -1,6 +1,7 @@
 
 export interface ProjectCard {
   header: string;
+  subtitle: string;
   imagesUrl: string;
   shortDescription: string;
   fullDescription: string;
