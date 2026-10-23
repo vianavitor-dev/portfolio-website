@@ -1,103 +1,89 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./App.css";
 import AboutMe from "./pages/AboutMe";
 import Projects from "./pages/Projects";
 import type { CommandInterface, ProjectCard } from "./common/PublicInterfaces";
 import ProjectDetails from "./components/ProjectDetails";
-import useIsVisible from "./hooks/useIsVisible";
 import useProjectDataReader from "./hooks/useProjectDataReader";
 
 function App() {
   const projectData: ProjectCard[] | null = useProjectDataReader();
-  const [currentSection, setCurrentSection] = useState("about-me");
+
+  type Section = "about-me" | "projects";
+  const [currentSection, setCurrentSection] = useState<Section>("about-me");
 
   const [cmdText, setCmdText] = useState("");
-  const [cmdList, setCmdList] = useState([
-    { isCommand: true, text: "about-me" },
+  const [cmdList, setCmdList] = useState<CommandInterface[]>([
+    {isCommand: true, text: "about-me"},
+    {isCommand: false, text: "'about-me' page successfuly rendered"},
+    {isCommand: false, text: "current page => about-me"}
   ]);
 
-  const handleCmdListChange = (action: "remove" | "add", text = cmdText, isCommand = true) => {
-    switch (action) {
-      case "add": {
-        const cmd = { isCommand: isCommand, text: text };
+  const handleCmdListChange = (text = cmdText, isCommand = true, auxResponse: (...args: never[]) => string[] = () => []) => {    
+    const cmd = { isCommand: isCommand, text: text } as CommandInterface;
+    let aux: string[] = [];
 
-        setCmdList([...cmdList, cmd]);
-        break;
-      }
-
-      case "remove":
-        setCmdList([cmdList[-1]]);
-        break;
-
-      default:
-        throw new Error("Invalid action passed: " + action);
+    if (cmd.text === "about-me" || cmd.text === "projects") {
+      setCurrentSection(cmd.text);
+      aux = [
+        `'${cmd.text}' page successfuly rendered`,
+        `current page => ${cmd.text}`
+      ];
     }
+
+    const cmdResponse = [...aux, ...auxResponse()].map((str) => (
+      {isCommand: false, text: str} as CommandInterface
+    ));
+
+    setCmdList((previousCmdList) => 
+      [...previousCmdList, cmd, ...cmdResponse]
+    );
   };
+
+  const textRef = useRef("");
+  useEffect(() => {
+    let isWriting:boolean = false;
+
+    const handleWritingCommand = (event:KeyboardEvent) => {
+      if (isWriting === true && event.key == "Enter") {
+        handleCmdListChange(textRef.current, true)
+        
+        isWriting = false;
+        textRef.current = "";
+        setCmdText("");
+          
+        return;
+      }
+      
+      if (isWriting === true && event.key != "\\") {
+        textRef.current += event.key;
+        setCmdText(textRef.current);
+      }
+      
+      if (event.key == "\\") {
+        isWriting = true;
+      } 
+    };
+
+    document.addEventListener("keypress", handleWritingCommand);
+
+    return (() => {
+      document.removeEventListener("keypress", handleWritingCommand);
+    })
+  }, [cmdList])
+
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(-1);
 
   const mainContainerContentRef = React.useRef<HTMLDivElement>(null);
-  const nextPageBottomRef = React.useRef<HTMLDivElement>(null);
-  const nextPageTopRef = React.useRef<HTMLDivElement>(null);
-
-  const isNextPageBottomVisible = useIsVisible(nextPageBottomRef);
-  const isNextPageTopVisible = useIsVisible(nextPageTopRef);
-
-  const debounce = (func: (...args: any[]) => void, waitTime: number) => {
-    let timeout;
-
-    return (...args: any[]) => {
-      const caller = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-
-      clearTimeout(timeout);
-      timeout = setTimeout(caller, waitTime);
-    }
-  }
-
-  const handleCurrentSectionChange = debounce(
-      () => {
-        switch (currentSection) {
-          case "about-me":
-            mainContainerContentRef.current?.scrollTo({
-                top: 200,
-                left: 0,
-                behavior: "instant",
-            });
-
-            setCurrentSection("projects");
-            break;
-          case "projects":
-            mainContainerContentRef.current?.scrollTo({
-                top: 0,
-                left: 0,
-                behavior: "instant",
-            });
-
-            setCurrentSection("about-me");
-            break;
-          default:
-            throw new Error(`currentSection '${currentSection}' is invalid!`);
-        }
-  }, 500);
-
-  useEffect(() => {
-    if (isNextPageTopVisible || isNextPageBottomVisible) {
-      handleCurrentSectionChange();
-    }
-
-  }, [isNextPageBottomVisible, isNextPageTopVisible]);
-
 
   const renderCurrentSectionPage = () => {
     switch (currentSection) {
       case "about-me":
         return (
           <AboutMe
-            onPointerOverCallBack={setCmdText}
-            onClickCallBack={handleCmdListChange}
-            onPointerOutCallBack={setCmdText}
+            onPointerOver={setCmdText}
+            onClick={handleCmdListChange}
+            onPointerOut={setCmdText}
           />
         );
       case "projects":
@@ -108,7 +94,6 @@ function App() {
             projectData={projectData}
           />
         );
-      case "skills":
     }
   };
 
@@ -141,7 +126,7 @@ function App() {
     );
   };
 
-  const createCmd = ({ isCommand, text }: CommandInterface, index: number) => {
+  const createCmd = ({ isCommand, text}: CommandInterface, index: number) => {
     return isCommand ? (
       <div className="line" key={index}>
         <span className="user-at-machine">guest@portfolio:</span>
@@ -150,7 +135,7 @@ function App() {
       </div>
     ) : (
       <div className="line" key={index}>
-        <span className="response successful">Page loaded successfuly! </span>
+        <span className="response successful">{text}</span>
       </div>
     );
   };
@@ -172,34 +157,7 @@ function App() {
         </div>
 
         <div className="main-container-content" ref={mainContainerContentRef}>
-          <div className="nextPageTop" 
-            ref={nextPageTopRef}
-            style={{
-              display: (currentSection === "projects") ? "block" : "none",
-              marginBottom: "150px",
-              // backgroundColor: "red",
-              width: "100%",
-              height: "20px",
-              position: "relative",
-              top: "0px",
-              left: 0,
-              overflow: "hidden"
-            }}>
-          </div>
           {renderCurrentSectionPage()}
-          <div className="nextPageBottom" 
-            ref={nextPageBottomRef}
-            style={{
-              display: (currentSection === "about-me") ? "block" : "none",
-              marginTop: "100px",
-              width: "100%",
-              height: "20px",
-              position: "relative",
-              bottom: 0,
-              left: 0,
-              overflow: "hidden"
-            }}>
-          </div>
         </div>
       </div>
 

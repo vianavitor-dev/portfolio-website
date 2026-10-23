@@ -22,7 +22,7 @@ export default function useProjectDataReader() {
         })
         .catch(error => new Error("Error when parsing response to JSON type: " + error))
         .then(respJson => {
-            console.log("respJson: ", respJson);
+            // console.log("respJson: ", respJson);
             setData(respJson as ProjectCard[]);
         })
     }, []);
