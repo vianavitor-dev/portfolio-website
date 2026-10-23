@@ -20,7 +20,7 @@ function Projects(prop: {setSelectedProjectIndex: any, projectData:ProjectCard[]
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [setSelectedProjectIndex]);
-  
+
   return (
         <div id="my-projects" ref={ref}>
           <h2 className="sub-title">| More projects coming soon!</h2>
@@ -52,10 +52,20 @@ function Projects(prop: {setSelectedProjectIndex: any, projectData:ProjectCard[]
 
                       <div className="technologies-used-container">
                         <div className="technologies-used">
-                          {technologies.map((item) => (
-                            <span key={`p${index}#${item}`}>#{item}</span>
+                          {technologies
+                          .slice(0, 4)
+                          .map((item) => (
+                            <span key={`p${index}#${item}`}>{item}</span>
                           ))}
+
+                          {(technologies.length > 4) 
+                          ? <span className="more">+{technologies.length - 4}</span> 
+                          : null}
                         </div>
+                      </div>
+
+                      <div className="more-details">
+                          <span>More Details {"->"}</span>
                       </div>
                     </div>
                   </div>
