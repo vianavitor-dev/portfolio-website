@@ -33,14 +33,14 @@ function App() {
 
   const handleCmdListChange = (text = cmdText, isCommand = true, auxResponse: (...args: never[]) => string[] = () => []) => {    
     const cmd = { isCommand: isCommand, text: text } as CommandInterface;
+    // eslint-disable-next-line no-useless-assignment
     let response: string[] = [];
 
     if (cmd.text === "clear") {
       setCmdList([]);
       return;
     }
-
-    if (cmd.text === "help") {
+    else if (cmd.text === "help") {
       response = [
         "Command List: ",
         "\n ",
@@ -50,12 +50,18 @@ function App() {
         "clear"
       ];
     }
-
-    if (cmd.text === "about-me" || cmd.text === "projects") {
+    else if (cmd.text === "about-me" || cmd.text === "projects") {
       setCurrentSection(cmd.text);
       response = [
         `'${cmd.text}' page successfuly rendered`,
         `current page => ${cmd.text}`
+      ];
+    }
+    else {
+      response = [
+        `unknow command!`,
+        `\n `,
+        `try 'help' to find the supported commands`
       ];
     }
 
@@ -69,6 +75,8 @@ function App() {
   };
 
   const textRef = useRef("");
+  const currentLineRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     let isWriting:boolean = false;
 
@@ -80,7 +88,8 @@ function App() {
           isWriting = false;
           textRef.current = "";
           setCmdText("");
-            
+          
+          currentLineRef.current?.classList.remove("on-focus");
           return;
         }
       }
@@ -92,6 +101,7 @@ function App() {
       
       if (event.key == "\\") {
         isWriting = true;
+        currentLineRef.current?.classList.add("on-focus");
       } 
     };
 
@@ -101,6 +111,7 @@ function App() {
         setCmdText(textRef.current);
 
         isWriting = false;
+        currentLineRef.current?.classList.remove("on-focus");
       }
 
       if (event.key == "Backspace") {
@@ -116,7 +127,7 @@ function App() {
       document.removeEventListener("keypress", handleWritingCommand);
       document.removeEventListener("keydown", handleDeleteText);
     })
-  }, [cmdList])
+  }, [cmdList, currentLineRef])
 
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(-1);
 
@@ -192,10 +203,10 @@ function App() {
         <div className="main-container-content" id="terminal">
           {
             // generate commands
-            cmdList.slice(-28).map((item, index) => createCmd(item, index))
+            cmdList.slice(-26).map((item, index) => createCmd(item, index))
           }
 
-          <div className="line current">
+          <div className="line current" ref={currentLineRef}>
             <span className="user-at-machine">guest@portfolio:</span>
             <span className="user-at-machine-symbol">~$</span>
             <span className="command">{cmdText}</span>
