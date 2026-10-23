@@ -66,9 +66,9 @@ function App() {
           "clear"
         ];
       }
-      else if (cmd.text === "cd github-profile" 
+      else if ((cmd.text === "cd github-profile" 
         || cmd.text === "cd linkedin-profile" 
-        || cmd.text === "cd send-email") {
+        || cmd.text === "cd send-email") && auxResponse().length <= 0) {
 
           response = [
             "you can't use this command in the terminal, use the links instead"
@@ -119,6 +119,10 @@ function App() {
       
       if (event.key == "\\") {
         isWriting = true;
+        
+        document.querySelectorAll("a").forEach((item) => item.blur());
+
+        currentLineRef.current?.focus();
         currentLineRef.current?.classList.add("on-focus");
       } 
     };

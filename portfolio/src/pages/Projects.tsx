@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import type {ProjectCard} from "../common/PublicInterfaces";
 
-function Projects(prop: {setSelectedProjectIndex: any, projectData:ProjectCard[]}) {
+function Projects(prop: {setSelectedProjectIndex: (index: number) => void, projectData:ProjectCard[]}) {
   //
   const setSelectedProjectIndex = prop.setSelectedProjectIndex;
   const projectData = prop.projectData;
