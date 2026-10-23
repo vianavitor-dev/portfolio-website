@@ -16,13 +16,6 @@
     --gnome-red: #CC0000;
     --gnome-bred: #EF2929;
     --btn-color: #1111;
-
-    --primary-color: var(--gnome-green);
-    --primary-font-color: var(--gnome-black);
-    --secondary-font-color: var(--gnome-bblack);
-    --interactive-element-color: var(--gnome-bmagenta);
-
-    background: #f9f2f2;
 }
 
 body {
@@ -31,6 +24,17 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;    
+}
+
+#root.light-mode {
+    --primary-color: var(--gnome-green);
+    --primary-font-color: var(--gnome-black);
+    --secondary-font-color: var(--gnome-bblack);
+    --interactive-element-color: var(--gnome-bmagenta);
+    --deactivated-interactive-element-color: var(--gnome-magenta);
+
+    --background-color: whitesmoke;
+    background: #f9f2f2;
 }
 
 #main-container {
@@ -48,7 +52,7 @@ body {
     height: 910px;
     max-width: 1000px;
     box-shadow: 0px 0px 2px black;
-    background-color: whitesmoke;
+    background-color: var(--background-color);
     position: relative;
 }
 
@@ -73,7 +77,7 @@ body {
 }
 
 .user-at-machine, .user-at-machine-symbol {
-    color: var(--gnome-green);
+    color: var(--primary-color);
     /* font-weight: 400; */
     font-weight: bold;
 }
@@ -117,7 +121,7 @@ body {
 .main-container-content, #project-details {
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
-    color: var(--gnome-black);
+    color: var(--primary-font-color);
     font-weight: 500;
     font-style: normal;
     font-size: large;
@@ -134,7 +138,7 @@ p {
 .sub-title{
     font-weight: 400;
     font-size: 1.4rem;
-    color: var(--gnome-bblack);
+    color: var(--secondary-font-color);
 }
 
 #about-me, #my-projects {
@@ -148,7 +152,7 @@ h1.title {
 
 #about-me span#my-job {
     font-weight: 900;
-    background-color: var(--gnome-green);
+    background-color: var(--primary-color);
     color: var(--gnome-bwhite);
     padding: 0.1em;
     margin-left: 3px;   
@@ -174,7 +178,7 @@ h1.title {
 }
 
 .link a {
-    background: var(--gnome-magenta);
+    background: var(--deactivated-interactive-element-color);
     padding: 8px;
     padding-right: 10px;
     font-weight: 700;
@@ -186,7 +190,7 @@ h1.title {
 }
 
 .link a.active {
-    background: var(--gnome-bmagenta);
+    background: var(--interactive-element-color);
     padding: 8px;
     padding-right: 10px;
     font-weight: 700;
@@ -216,7 +220,7 @@ h1.title {
 .label .user-at-machine, 
 .label .user-at-machine-symbol {
     color: var(--gnome-bwhite);
-    background-color: var(--gnome-green);
+    background-color: var(--primary-color);
     padding: 2px;
     padding-left: 4px;
 }
@@ -277,7 +281,7 @@ h1.title {
 .card-rail .card {
     height: 450px;
     position: relative;
-    background: whitesmoke;
+    background: var(--background-color);
     box-shadow: 0px 0px 50px rgba(0, 0, 0, .2);
     cursor: pointer;
 }
@@ -348,7 +352,7 @@ h1.title {
     width: 100%;
     overflow: hidden;
     font-size: medium;
-    color: var(--gnome-green);
+    color: var(--primary-color);
     padding-left: 2px;
     font-optical-sizing: auto;
     font-weight: 700;
@@ -367,7 +371,7 @@ h1.title {
 
 /* # MY PROJECTS PAGE > PROJECT DETAILS  --------------------------------------------------------------------------  */
 #project-details {
-    background-color: whitesmoke;
+    background-color: var(--background-color);
     position: fixed;
     top: 10%;
     right: 50%;

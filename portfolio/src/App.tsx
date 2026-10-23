@@ -33,36 +33,54 @@ function App() {
 
   const handleCmdListChange = (text = cmdText, isCommand = true, auxResponse: (...args: never[]) => string[] = () => []) => {    
     const cmd = { isCommand: isCommand, text: text } as CommandInterface;
-    // eslint-disable-next-line no-useless-assignment
-    let response: string[] = [];
-
-    if (cmd.text === "clear") {
-      setCmdList([]);
-      return;
-    }
-    else if (cmd.text === "help") {
-      response = [
-        "Command List: ",
-        "\n ",
+    const validCommands = [
         "about-me",
         "projects",
+        "cd github-profile",
+        "cd linkedin-profile",
+        "cd send-email",
         "help",
         "clear"
-      ];
-    }
-    else if (cmd.text === "about-me" || cmd.text === "projects") {
-      setCurrentSection(cmd.text);
-      response = [
-        `'${cmd.text}' page successfuly rendered`,
-        `current page => ${cmd.text}`
-      ];
-    }
-    else {
+    ];
+
+    let response: string[] = [];
+
+    if (!validCommands.includes(cmd.text)) {
       response = [
         `unknow command!`,
         `\n `,
         `try 'help' to find the supported commands`
       ];
+    } else {
+      if (cmd.text === "clear") {
+        setCmdList([]);
+        return;
+      }
+      else if (cmd.text === "help") {
+        response = [
+          "Command List: ",
+          "\n ",
+          "about-me",
+          "projects",
+          "help",
+          "clear"
+        ];
+      }
+      else if (cmd.text === "cd github-profile" 
+        || cmd.text === "cd linkedin-profile" 
+        || cmd.text === "cd send-email") {
+
+          response = [
+            "you can't use this command in the terminal, use the links instead"
+          ];
+      }
+      else if (cmd.text === "about-me" || cmd.text === "projects") {
+        setCurrentSection(cmd.text);
+        response = [
+          `'${cmd.text}' page successfuly rendered`,
+          `current page => ${cmd.text}`
+        ];
+      }
     }
 
     const cmdResponse = [...response, ...auxResponse()].map((str) => (
@@ -203,7 +221,7 @@ function App() {
         <div className="main-container-content" id="terminal">
           {
             // generate commands
-            cmdList.slice(-26).map((item, index) => createCmd(item, index))
+            cmdList.slice(-20).map((item, index) => createCmd(item, index))
           }
 
           <div className="line current" ref={currentLineRef}>

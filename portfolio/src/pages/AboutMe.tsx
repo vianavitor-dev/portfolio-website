@@ -76,15 +76,22 @@ function AboutMe({onPointerOver, onClick, onPointerOut}) {
       <div id="my-contacts">
         {
             myContactsItems.map(({value, cmdTxt, url}, index) => (
-                <span key={index}
-                    className="link"
-                    onPointerOver={() => onPointerOver(cmdTxt)}
-                    onClick={() => onClick()}
-                    onPointerOut={() => onPointerOut("")}
-                    onAuxClick={() => onClick(cmdTxt)}
-                >
-                    <a href={url} className="active">
-                        {value + " →"}
+                <span key={index} className="link">
+                    <a key={"a#" + index} 
+                      href={url} 
+                      className="active"
+                      onPointerOver={() => onPointerOver(cmdTxt)}
+                      onClick={() => 
+                        onClick(cmdTxt, true, () => [
+                          "redirecting user to " + (value == "Email" ? "Gmail" : value) + "..."                     
+                        ])}
+                      onPointerOut={() => onPointerOut("")}
+                      onAuxClick={() => 
+                        onClick(cmdTxt, true, () => [
+                          "redirecting user to " + (value == "Email" ? "Gmail" : value) + "..."                     
+                        ])}
+                    >
+                      {value + " →"}
                     </a>
                 </span>
             ))
