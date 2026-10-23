@@ -14,6 +14,18 @@ function App() {
 
   const [cmdText, setCmdText] = useState("");
   const [cmdList, setCmdList] = useState<CommandInterface[]>([
+    // Render Simple Introduction
+    {isCommand: true, text: "cat intro.txt"},
+    {isCommand: false, text: "+ ----------------------- +"},
+    {isCommand: false, text: "| WELCOME TO MY PORTFOLIO |"},
+    {isCommand: false, text: "+ ======================= +"},
+    {isCommand: false, text: "\n "},
+    {isCommand: false, text: "\n "},
+    {isCommand: false, text: "\n "},
+    {isCommand: false, text: "Enter '\\' to start writing in this terminal"},
+    {isCommand: false, text: "\n "},
+    {isCommand: false, text: "** If you have any doubt about which command use, then write 'help' in this terminal"},
+    // Render Current Page - About Me
     {isCommand: true, text: "about-me"},
     {isCommand: false, text: "'about-me' page successfuly rendered"},
     {isCommand: false, text: "current page => about-me"}
@@ -21,17 +33,33 @@ function App() {
 
   const handleCmdListChange = (text = cmdText, isCommand = true, auxResponse: (...args: never[]) => string[] = () => []) => {    
     const cmd = { isCommand: isCommand, text: text } as CommandInterface;
-    let aux: string[] = [];
+    let response: string[] = [];
+
+    if (cmd.text === "clear") {
+      setCmdList([]);
+      return;
+    }
+
+    if (cmd.text === "help") {
+      response = [
+        "Command List: ",
+        "\n ",
+        "about-me",
+        "projects",
+        "help",
+        "clear"
+      ];
+    }
 
     if (cmd.text === "about-me" || cmd.text === "projects") {
       setCurrentSection(cmd.text);
-      aux = [
+      response = [
         `'${cmd.text}' page successfuly rendered`,
         `current page => ${cmd.text}`
       ];
     }
 
-    const cmdResponse = [...aux, ...auxResponse()].map((str) => (
+    const cmdResponse = [...response, ...auxResponse()].map((str) => (
       {isCommand: false, text: str} as CommandInterface
     ));
 
@@ -45,14 +73,16 @@ function App() {
     let isWriting:boolean = false;
 
     const handleWritingCommand = (event:KeyboardEvent) => {
-      if (isWriting === true && event.key == "Enter") {
-        handleCmdListChange(textRef.current, true)
-        
-        isWriting = false;
-        textRef.current = "";
-        setCmdText("");
+      if (isWriting === true) {
+        if (event.key == "Enter") {
+          handleCmdListChange(textRef.current, true)
           
-        return;
+          isWriting = false;
+          textRef.current = "";
+          setCmdText("");
+            
+          return;
+        }
       }
       
       if (isWriting === true && event.key != "\\") {
@@ -65,10 +95,26 @@ function App() {
       } 
     };
 
+    const handleDeleteText = (event: KeyboardEvent) => {
+      if (event.key == "Escape") {
+        textRef.current = "";
+        setCmdText(textRef.current);
+
+        isWriting = false;
+      }
+
+      if (event.key == "Backspace") {
+        textRef.current = textRef.current.substring(0, textRef.current.length -1);
+        setCmdText(textRef.current);
+      }
+    }
+
     document.addEventListener("keypress", handleWritingCommand);
+    document.addEventListener("keydown", handleDeleteText);
 
     return (() => {
       document.removeEventListener("keypress", handleWritingCommand);
+      document.removeEventListener("keydown", handleDeleteText);
     })
   }, [cmdList])
 
