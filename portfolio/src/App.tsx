@@ -6,6 +6,8 @@ import type { CommandInterface, ProjectCard } from "./common/PublicInterfaces";
 import ProjectDetails from "./components/ProjectDetails";
 import useProjectDataReader from "./hooks/useProjectDataReader";
 import PageNavigation from "./components/PageNavigation";
+import { useTranslation } from "react-i18next";
+
 
 function App() {
   const projectData: ProjectCard[] | null = useProjectDataReader();
@@ -13,12 +15,17 @@ function App() {
   type Section = "about-me" | "projects";
   const [currentSection, setCurrentSection] = useState<Section>("about-me");
 
+  const { t, i18n } = useTranslation('default');
+  useEffect(() => {
+    document.documentElement.lang = i18n.resolvedLanguage || 'en';
+  }, [i18n.resolvedLanguage]);
+
   const [cmdText, setCmdText] = useState("");
   const [cmdList, setCmdList] = useState<CommandInterface[]>([
     // Render Simple Introduction
     {isCommand: true, text: "cat intro.txt"},
     {isCommand: false, text: "+ ----------------------- +"},
-    {isCommand: false, text: "| WELCOME TO MY PORTFOLIO |"},
+    {isCommand: false, text: `| ${ t("terminal_greetings_header") } |`},
     {isCommand: false, text: "+ ======================= +"},
     {isCommand: false, text: "\n "},
     {isCommand: false, text: "\n "},

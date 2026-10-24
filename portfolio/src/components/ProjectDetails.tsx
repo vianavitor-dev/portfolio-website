@@ -12,11 +12,7 @@ const fallbackImages = [
   "https://placehold.co/800x500?text=Project+Screenshot+2",
 ];
 
-export default function ProjectDetails({
-  selectedProjectIndex,
-  selectedProject,
-  onClose,
-}: ProjectDetailsProps) {
+export default function ProjectDetails({selectedProjectIndex, selectedProject, onClose }: ProjectDetailsProps) {
   const images = selectedProject.imagesUrl?.length
     ? [selectedProject.imagesUrl]
     : fallbackImages;
@@ -97,12 +93,12 @@ export default function ProjectDetails({
           )}
 
           {images.length > 1 && (
-            <div className="carousel-indicators" aria-label="Choose screenshot">
+            <div className="carousel-indicators">
               {images.map((imageUrl, index) => (
                 <button
                   key={`${selectedProjectIndex}-indicator-${imageUrl}-${index}`}
                   type="button"
-                  aria-label={`Show screenshot ${index + 1}`}
+                  // aria-label={`Show screenshot ${index + 1}`}
                   aria-current={index === activeImageIndex ? "true" : undefined}
                   onClick={() => setActiveImageIndex(index)}
                 />
@@ -140,7 +136,7 @@ export default function ProjectDetails({
             <a
               href={selectedProject.deployedUrl ?? undefined}
               className={`project-link${selectedProject.deployedUrl ? " active" : " inactive"}`}
-              title={selectedProject.deployedUrl ? "Visit the website" : "Website not available"}
+              title={selectedProject.deployedUrl ? "" : "Website not available"} // manual
               target={selectedProject.deployedUrl ? "_blank" : undefined}
               rel={selectedProject.deployedUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.deployedUrl}
@@ -148,7 +144,7 @@ export default function ProjectDetails({
                 if (!selectedProject.deployedUrl) event.preventDefault();
               }}
             >
-              <span className="project-link-label">Visit Website</span>
+              <span className="project-link-label">Visit Website</span> //
               <span className="project-link-arrow" aria-hidden="true">→</span>
             </a>
           </div>
@@ -157,7 +153,7 @@ export default function ProjectDetails({
             <a
               href={selectedProject.githubUrl ?? undefined}
               className={`project-link${selectedProject.githubUrl ? " active" : " inactive"}`}
-              title={selectedProject.githubUrl ? "Visit the GitHub repository" : "GitHub repository not available"}
+              title={selectedProject.githubUrl ? "" : "GitHub repository not available"} // manual
               target={selectedProject.githubUrl ? "_blank" : undefined}
               rel={selectedProject.githubUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.githubUrl}
@@ -165,7 +161,7 @@ export default function ProjectDetails({
                 if (!selectedProject.githubUrl) event.preventDefault();
               }}
             >
-              <span className="project-link-label">GitHub Repository</span>
+              <span className="project-link-label">GitHub Repository</span> //  
               <span className="project-link-arrow" aria-hidden="true">→</span>
             </a>
           </div>
