@@ -1,6 +1,12 @@
-import {} from "react";
+import { type SetStateAction } from "react";
 
-function AboutMe({onPointerOver, onClick, onPointerOut}) {
+interface AboutMeProps {
+  onPointerOver: React.Dispatch<SetStateAction<string>>; 
+  onClick: (text?: string, isCommand?: boolean, func?: (...args: never[]) => string[]) => void; 
+  onPointerOut: React.Dispatch<SetStateAction<string>>;
+}
+
+function AboutMe({onPointerOver, onClick, onPointerOut}: AboutMeProps) {
     const myContactsItems = [
         {
             value: "Email",

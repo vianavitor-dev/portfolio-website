@@ -18,7 +18,7 @@ export default function ProjectDetails({
   onClose,
 }: ProjectDetailsProps) {
   const images = selectedProject.imagesUrl?.length
-    ? selectedProject.imagesUrl
+    ? [selectedProject.imagesUrl]
     : fallbackImages;
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 

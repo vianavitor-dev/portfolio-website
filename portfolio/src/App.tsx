@@ -32,6 +32,9 @@ function App() {
     {isCommand: false, text: "current page => about-me"}
   ]);
 
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState(-1);
+  const mainContainerContentRef = React.useRef<HTMLDivElement>(null);
+
   const navigateTo = (page: Section) => {
     setSelectedProjectIndex(-1);
     setCurrentSection(page);
@@ -156,10 +159,6 @@ function App() {
       document.removeEventListener("keydown", handleDeleteText);
     })
   }, [cmdList, currentLineRef])
-
-  const [selectedProjectIndex, setSelectedProjectIndex] = useState(-1);
-
-  const mainContainerContentRef = React.useRef<HTMLDivElement>(null);
 
   const renderCurrentSectionPage = () => {
     switch (currentSection) {
