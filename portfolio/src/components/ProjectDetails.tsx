@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import type { ProjectCard } from "../common/PublicInterfaces";
+import type { TFunction } from "i18next";
 
 type ProjectDetailsProps = {
   selectedProjectIndex: number;
   selectedProject: ProjectCard;
   onClose: () => void;
+  t: TFunction<"default", unknown>;
+  lang?: string;
 };
 
 const fallbackImages = [
@@ -12,7 +15,7 @@ const fallbackImages = [
   "https://placehold.co/800x500?text=Project+Screenshot+2",
 ];
 
-export default function ProjectDetails({selectedProjectIndex, selectedProject, onClose }: ProjectDetailsProps) {
+export default function ProjectDetails({selectedProjectIndex, selectedProject, onClose, t, lang}: ProjectDetailsProps) {
   const images = selectedProject.imagesUrl?.length
     ? [selectedProject.imagesUrl]
     : fallbackImages;
@@ -36,7 +39,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
     .filter(Boolean);
 
   return (
-    <div id="project-details" aria-label={`${selectedProject.header} project details`}>
+    <div id="project-details">
       <button
         type="button"
         className="project-details-close"
@@ -58,7 +61,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
               type="button"
               className="carousel-arrow left"
               onClick={showPreviousImage}
-              aria-label="Show previous screenshot"
+              // aria-label="Show previous screenshot"
             >
               ‹
             </button>
@@ -73,7 +76,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
                 <figure className="image-carousel-slide" key={`${selectedProjectIndex}-${imageUrl}-${index}`}>
                   <img
                     src={imageUrl}
-                    alt={`${selectedProject.header} screenshot ${index + 1}`}
+                    alt={lang == "en" ? `${selectedProject.header} screenshot ${index + 1}` : `captura de tela ${index + 1} de ${selectedProject.header}`}
                     loading={index === activeImageIndex ? "eager" : "lazy"}
                   />
                 </figure>
@@ -86,7 +89,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
               type="button"
               className="carousel-arrow right"
               onClick={showNextImage}
-              aria-label="Show next screenshot"
+              // aria-label="Show next screenshot"
             >
               ›
             </button>
@@ -118,7 +121,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
         <h3 className="label">
           <span className="user-at-machine">guest@portfolio:</span>
           <span className="user-at-machine-symbol">~$</span>
-          Technologies Used
+          {t("projectdetails_tech_title")}
         </h3>
         <div className="simple-terminal-table">
           {selectedProject.technologies.map((item) => (
@@ -129,14 +132,14 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
         <h3 className="label project-links-heading">
           <span className="user-at-machine">guest@portfolio:</span>
           <span className="user-at-machine-symbol">~$</span>
-          Project Links
+          {t("projectdetails_links_title")}
         </h3>
         <div className="available-at">
           <div className="link">
             <a
               href={selectedProject.deployedUrl ?? undefined}
               className={`project-link${selectedProject.deployedUrl ? " active" : " inactive"}`}
-              title={selectedProject.deployedUrl ? "" : "Website not available"} // manual
+              title={selectedProject.deployedUrl ? "" : t("projectdetails_invalid_website_link")}
               target={selectedProject.deployedUrl ? "_blank" : undefined}
               rel={selectedProject.deployedUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.deployedUrl}
@@ -144,7 +147,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
                 if (!selectedProject.deployedUrl) event.preventDefault();
               }}
             >
-              <span className="project-link-label">Visit Website</span> //
+              <span className="project-link-label">{t("projectdetails_visit_website")}</span>
               <span className="project-link-arrow" aria-hidden="true">→</span>
             </a>
           </div>
@@ -153,7 +156,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
             <a
               href={selectedProject.githubUrl ?? undefined}
               className={`project-link${selectedProject.githubUrl ? " active" : " inactive"}`}
-              title={selectedProject.githubUrl ? "" : "GitHub repository not available"} // manual
+              title={selectedProject.githubUrl ? "" : t("projectdetails_invalid_repo_link")}
               target={selectedProject.githubUrl ? "_blank" : undefined}
               rel={selectedProject.githubUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.githubUrl}
@@ -161,7 +164,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
                 if (!selectedProject.githubUrl) event.preventDefault();
               }}
             >
-              <span className="project-link-label">GitHub Repository</span> //  
+              <span className="project-link-label">{t("projectdetails_visit_repo")}</span>  
               <span className="project-link-arrow" aria-hidden="true">→</span>
             </a>
           </div>

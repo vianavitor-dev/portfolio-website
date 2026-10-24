@@ -1,14 +1,14 @@
+import type { TFunction } from "i18next";
+
 type PortfolioPage = "about-me" | "projects";
 
 type PageNavigationProps = {
   currentPage: PortfolioPage;
   onNavigate: (page: PortfolioPage) => void;
+  t: TFunction<"default", unknown>;
 };
 
-export default function PageNavigation({
-  currentPage,
-  onNavigate,
-}: PageNavigationProps) {
+export default function PageNavigation({currentPage, onNavigate, t}: PageNavigationProps) {
   return (
     <nav className="page-navigation" aria-label="Main navigation">
       <button
@@ -17,7 +17,7 @@ export default function PageNavigation({
         aria-current={currentPage === "about-me" ? "page" : undefined}
         onClick={() => onNavigate("about-me")}
       >
-        About Me
+        {t("navbtn_aboutme")}
       </button>
       <button
         type="button"
@@ -25,7 +25,7 @@ export default function PageNavigation({
         aria-current={currentPage === "projects" ? "page" : undefined}
         onClick={() => onNavigate("projects")}
       >
-        Projects
+        {t("navbtn_projects")}
       </button>
     </nav>
   );

@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import type {ProjectCard} from "../common/PublicInterfaces";
+import type { TFunction } from "i18next";
 
-function Projects(prop: {setSelectedProjectIndex: (index: number) => void, projectData:ProjectCard[]}) {
+function Projects(prop: {setSelectedProjectIndex: (index: number) => void, projectData:ProjectCard[], t: TFunction<"default", unknown>}) {
   //
   const setSelectedProjectIndex = prop.setSelectedProjectIndex;
   const projectData = prop.projectData;
   const ref = React.useRef<HTMLDivElement>(null);
+  const t = prop.t;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -23,12 +25,10 @@ function Projects(prop: {setSelectedProjectIndex: (index: number) => void, proje
 
   return (
         <div id="my-projects" ref={ref}>
-          <h2 className="sub-title">| More projects coming soon!</h2>
-          <h1 className="title">My Projects</h1>
+          <h2 className="sub-title">{t("projects_subtitle")}</h2>
+          <h1 className="title">{t("projects_title")}</h1>
           <p>
-            Here are some of the projects I've worked on, where I've put my knowledge into practice, 
-            explored new technologies, and worked through different challenges. Each project has helped me 
-            improve my skills and learn something new along the way.
+            {t("projects_p1")}
           </p>
           <div className="card-container">
             <div className="card-rail">
@@ -65,7 +65,7 @@ function Projects(prop: {setSelectedProjectIndex: (index: number) => void, proje
                       </div>
 
                       <div className="more-details">
-                          <span>More Details {"->"}</span>
+                          <span>{t("projects_card_more_details") + "->"}</span>
                       </div>
                     </div>
                   </div>
