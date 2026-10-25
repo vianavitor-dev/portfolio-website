@@ -6,6 +6,8 @@ import type { CommandInterface, ProjectCard } from "./common/PublicInterfaces";
 import ProjectDetails from "./components/ProjectDetails";
 import useProjectDataReader from "./hooks/useProjectDataReader";
 import PageNavigation from "./components/PageNavigation";
+import { useTranslation } from "react-i18next";
+
 
 function App() {
   const projectData: ProjectCard[] | null = useProjectDataReader();
@@ -13,23 +15,28 @@ function App() {
   type Section = "about-me" | "projects";
   const [currentSection, setCurrentSection] = useState<Section>("about-me");
 
+  const { t, i18n } = useTranslation('default');
+  useEffect(() => {
+    document.documentElement.lang = i18n.resolvedLanguage || 'en';
+  }, [i18n.resolvedLanguage]);
+
   const [cmdText, setCmdText] = useState("");
   const [cmdList, setCmdList] = useState<CommandInterface[]>([
     // Render Simple Introduction
     {isCommand: true, text: "cat intro.txt"},
     {isCommand: false, text: "+ ----------------------- +"},
-    {isCommand: false, text: "| WELCOME TO MY PORTFOLIO |"},
+    {isCommand: false, text: `| ${ t("terminal_greetings_header") } |`},
     {isCommand: false, text: "+ ======================= +"},
     {isCommand: false, text: "\n "},
     {isCommand: false, text: "\n "},
     {isCommand: false, text: "\n "},
-    {isCommand: false, text: "Enter '\\' to start writing in this terminal"},
+    {isCommand: false, text: t("terminal_greetings_p1")},
     {isCommand: false, text: "\n "},
-    {isCommand: false, text: "** If you have any doubt about which command use, then write 'help' in this terminal"},
+    {isCommand: false, text: t("terminal_greetings_p2")},
     // Render Current Page - About Me
     {isCommand: true, text: "about-me"},
-    {isCommand: false, text: "'about-me' page successfuly rendered"},
-    {isCommand: false, text: "current page => about-me"}
+    {isCommand: false, text: t("command_aboutme_p1")},
+    {isCommand: false, text: "$CURRENT_PAGE = about-me"}
   ]);
 
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(-1);
@@ -56,9 +63,9 @@ function App() {
 
     if (!validCommands.includes(cmd.text)) {
       response = [
-        `unknow command!`,
+        t("command_invalid_p1"),
         `\n `,
-        `try 'help' to find the supported commands`
+        t("command_invalid_p2")
       ];
     } else {
       if (cmd.text === "clear") {
@@ -67,7 +74,7 @@ function App() {
       }
       else if (cmd.text === "help") {
         response = [
-          "Command List: ",
+          (i18n.resolvedLanguage == "en") ? "Command List: " : "Lista de Comandos: ",
           "\n ",
           "about-me",
           "projects",
@@ -80,14 +87,15 @@ function App() {
         || cmd.text === "cd send-email") && auxResponse().length <= 0) {
 
           response = [
-            "you can't use this command in the terminal, use the links instead"
+            t("command_invalid_link")
           ];
       }
       else if (cmd.text === "about-me" || cmd.text === "projects") {
         navigateTo(cmd.text);
+
         response = [
-          `'${cmd.text}' page successfuly rendered`,
-          `current page => ${cmd.text}`
+          (cmd.text === "about-me") ? t("command_aboutme_p1") : t("command_projects_p1"), 
+          `$CURRENT_PAGE = ${cmd.text}`
         ];
       }
     }
@@ -168,6 +176,8 @@ function App() {
             onPointerOver={setCmdText}
             onClick={handleCmdListChange}
             onPointerOut={setCmdText}
+            t={t}
+            i18nIsDynamicList={true}
           />
         );
       case "projects":
@@ -176,6 +186,8 @@ function App() {
           <Projects
             setSelectedProjectIndex={setSelectedProjectIndex}
             projectData={projectData}
+            t={t}
+            i18nIsDynamicList={true}
           />
         );
     }
@@ -206,6 +218,9 @@ function App() {
           selectedProject={selectedProject}
           selectedProjectIndex={selectedProjectIndex}
           onClose={() => setSelectedProjectIndex(-1)}
+          t={t}
+          lang={i18n.resolvedLanguage}
+          i18nIsDynamicList={true}
         />
       </>
     );
@@ -246,7 +261,12 @@ function App() {
         </div>
       </div>
 
-      <PageNavigation currentPage={currentSection} onNavigate={navigateTo} />
+      <PageNavigation 
+        currentPage={currentSection} 
+        onNavigate={navigateTo} 
+        t={t}
+        i18nIsDynamicList={true}
+      />
 
       {selectedProjectIndex != -1 ? RenderSelectedProject() : null}
     </>

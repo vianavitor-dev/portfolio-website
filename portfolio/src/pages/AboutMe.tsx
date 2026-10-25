@@ -1,12 +1,14 @@
+import type { TFunction } from "i18next";
 import { type SetStateAction } from "react";
 
 interface AboutMeProps {
   onPointerOver: React.Dispatch<SetStateAction<string>>; 
   onClick: (text?: string, isCommand?: boolean, func?: (...args: never[]) => string[]) => void; 
   onPointerOut: React.Dispatch<SetStateAction<string>>;
+  t: TFunction<"default", undefined>;
 }
 
-function AboutMe({onPointerOver, onClick, onPointerOut}: AboutMeProps) {
+function AboutMe({onPointerOver, onClick, onPointerOut, t}: AboutMeProps) {
     const myContactsItems = [
         {
             value: "Email",
@@ -28,33 +30,28 @@ function AboutMe({onPointerOver, onClick, onPointerOut}: AboutMeProps) {
   return (
     <>
       <div id="about-me">
-        <p id="greetings" className="sub-title">| Welcome to my portfolio!</p>
+        <p id="greetings" className="sub-title">| { t("aboutme_greetings_subtitle") }</p>
 
         <h1 className="title">
-          I'm Vitor a <span id="my-job">Java Backend Developer</span>
+          { t("aboutme_title_myname") } <span id="my-job">{ t("aboutme_title_myjob") }</span>
         </h1>
 
         <p>
-          Since I started learning programming, I've always enjoyed building personal projects to improve my skills 
-          and explore new ideas. I like searching for different approaches, experimenting with technologies that could 
-          improve a project, and finding ways to make my code more efficient. These are some of the things I keep in mind 
-          whenever I'm coding.
+          { t("aboutme_p1") }
         </p>
         <p>
-          On this portfolio, I've put together some of my most relevant projects, along with the technologies I've used 
-          and the skills I've developed while building them. Each project represents an opportunity to learn something new, 
-          put my knowledge into practice, and keep improving as a developer.
+          { t("aboutme_p2") }  
         </p>
       </div>
 
       <div id="my-tech-stack">
-        <h2 className="title">My Technologies Stack</h2>
+        <h2 className="title">{t("aboutme_stacks_title")}</h2>
 
         <div className="tech-item" id="main-techs">
           <h3 className="label">
             <span className="user-at-machine">guest@portfolio:</span>
             <span className="user-at-machine-symbol">~$</span>
-              Main Stack
+              {t("aboutme_stacks_main")}
           </h3>
 
           <div className="simple-terminal-table">
@@ -68,7 +65,7 @@ function AboutMe({onPointerOver, onClick, onPointerOut}: AboutMeProps) {
           <h3 className="label">
             <span className="user-at-machine">guest@portfolio:</span>
             <span className="user-at-machine-symbol">~$</span>
-            Complementary Stack
+            {t("aboutme_stacks_complementary")}
           </h3>
 
           <div className="simple-terminal-table">
@@ -89,12 +86,12 @@ function AboutMe({onPointerOver, onClick, onPointerOut}: AboutMeProps) {
                       onPointerOver={() => onPointerOver(cmdTxt)}
                       onClick={() => 
                         onClick(cmdTxt, true, () => [
-                          "redirecting user to " + (value == "Email" ? "Gmail" : value) + "..."                     
+                          t("aboutme_redirecting_command") + (value == "Email" ? "Gmail" : value) + "..."                     
                         ])}
                       onPointerOut={() => onPointerOut("")}
                       onAuxClick={() => 
                         onClick(cmdTxt, true, () => [
-                          "redirecting user to " + (value == "Email" ? "Gmail" : value) + "..."                     
+                          t("aboutme_redirecting_command") + (value == "Email" ? "Gmail" : value) + "..."                     
                         ])}
                     >
                       {value + " →"}
