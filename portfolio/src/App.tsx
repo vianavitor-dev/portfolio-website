@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import AboutMe from "./pages/AboutMe";
 import Projects from "./pages/Projects";
@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 
 
 function App() {
-  const projectData: ProjectCard[] | null = useProjectDataReader();
+  const projectData: ProjectCard[] = useProjectDataReader();
 
   type Section = "about-me" | "projects";
   const [currentSection, setCurrentSection] = useState<Section>("about-me");
@@ -19,6 +19,14 @@ function App() {
   useEffect(() => {
     document.documentElement.lang = i18n.resolvedLanguage || 'en';
   }, [i18n.resolvedLanguage]);
+
+  useEffect(() => {
+    document.title = t("document_title", {
+      defaultValue: i18n.resolvedLanguage?.startsWith("pt")
+        ? "Portfólio de Vitor Viana"
+        : "Vitor Viana | Portfolio"
+    });
+  }, [i18n.resolvedLanguage, t]);
 
   const [cmdText, setCmdText] = useState("");
   const [cmdList, setCmdList] = useState<CommandInterface[]>([
@@ -40,7 +48,19 @@ function App() {
   ]);
 
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(-1);
-  const mainContainerContentRef = React.useRef<HTMLDivElement>(null);
+  const projectCardTriggerRef = useRef<HTMLElement | null>(null);
+
+  const openProjectDetails = (index: number, trigger?: HTMLElement) => {
+    if (trigger) projectCardTriggerRef.current = trigger;
+    setSelectedProjectIndex(index);
+  };
+
+  useEffect(() => {
+    if (selectedProjectIndex !== -1) return;
+
+    projectCardTriggerRef.current?.focus();
+    projectCardTriggerRef.current = null;
+  }, [selectedProjectIndex]);
 
   const navigateTo = (page: Section) => {
     setSelectedProjectIndex(-1);
@@ -177,17 +197,16 @@ function App() {
             onClick={handleCmdListChange}
             onPointerOut={setCmdText}
             t={t}
-            i18nIsDynamicList={true}
           />
         );
       case "projects":
         // console.log("renderCurrentSectionPage: ", currentSection);  
         return (
           <Projects
-            setSelectedProjectIndex={setSelectedProjectIndex}
+            setSelectedProjectIndex={openProjectDetails}
             projectData={projectData}
             t={t}
-            i18nIsDynamicList={true}
+            lang={i18n.resolvedLanguage}
           />
         );
     }
@@ -212,7 +231,8 @@ function App() {
         <div
           className="shadow-curtain"
           onClick={() => setSelectedProjectIndex(-1)}
-        ></div>
+          aria-hidden="true"
+        />
 
         <ProjectDetails
           selectedProject={selectedProject}
@@ -220,7 +240,6 @@ function App() {
           onClose={() => setSelectedProjectIndex(-1)}
           t={t}
           lang={i18n.resolvedLanguage}
-          i18nIsDynamicList={true}
         />
       </>
     );
@@ -229,9 +248,9 @@ function App() {
   const createCmd = ({ isCommand, text}: CommandInterface, index: number) => {
     return isCommand ? (
       <div className="line" key={index}>
-        <span className="user-at-machine">guest@portfolio:</span>
-        <span className="user-at-machine-symbol">~$</span>
-        <span className="command">{text}</span>
+        <span className="user-at-machine notranslate" translate="no">guest@portfolio:</span>
+        <span className="user-at-machine-symbol notranslate" translate="no">~$</span>
+        <span className="command notranslate" translate="no">{text}</span>
       </div>
     ) : (
       <div className="line" key={index}>
@@ -242,7 +261,7 @@ function App() {
 
   return (
     <>
-      <div id="main-container">
+      <main id="main-container" inert={selectedProjectIndex !== -1}>
         <div className="main-container-content" id="terminal">
           {
             // generate commands
@@ -250,22 +269,30 @@ function App() {
           }
 
           <div className="line current" ref={currentLineRef}>
-            <span className="user-at-machine">guest@portfolio:</span>
-            <span className="user-at-machine-symbol">~$</span>
-            <span className="command">{cmdText}</span>
+            <span className="user-at-machine notranslate" translate="no">guest@portfolio:</span>
+            <span className="user-at-machine-symbol notranslate" translate="no">~$</span>
+            <span className="command notranslate" translate="no">{cmdText}</span>
           </div>
         </div>
 
-        <div className="main-container-content" ref={mainContainerContentRef}>
+        <section
+          className="main-container-content"
+          aria-label={t("portfolio_content_label", {
+            defaultValue: i18n.resolvedLanguage?.startsWith("pt")
+              ? "Conteúdo do portfólio"
+              : "Portfolio content"
+          })}
+        >
           {renderCurrentSectionPage()}
-        </div>
-      </div>
+        </section>
+      </main>
 
       <PageNavigation 
         currentPage={currentSection} 
         onNavigate={navigateTo} 
         t={t}
-        i18nIsDynamicList={true}
+        lang={i18n.resolvedLanguage}
+        inert={selectedProjectIndex !== -1}
       />
 
       {selectedProjectIndex != -1 ? RenderSelectedProject() : null}

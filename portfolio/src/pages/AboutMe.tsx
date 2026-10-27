@@ -49,29 +49,29 @@ function AboutMe({onPointerOver, onClick, onPointerOut, t}: AboutMeProps) {
 
         <div className="tech-item" id="main-techs">
           <h3 className="label">
-            <span className="user-at-machine">guest@portfolio:</span>
-            <span className="user-at-machine-symbol">~$</span>
+            <span className="user-at-machine notranslate" translate="no">guest@portfolio:</span>
+            <span className="user-at-machine-symbol notranslate" translate="no">~$</span>
               {t("aboutme_stacks_main")}
           </h3>
 
           <div className="simple-terminal-table">
-            <span>Java</span> <span>Spring Boot</span> <span>Spring Security</span>
-            <span>REST API</span> <span>Jason Web Token</span> <span>JUnit</span> 
-            <span>Mockito</span> <span>MySQL</span> <span>Docker</span> 
-            <span>Git</span> <span>GitHub Actions {"(CI/CD)"} </span>
+            <span className="notranslate" translate="no">Java</span> <span className="notranslate" translate="no">Spring Boot</span> <span className="notranslate" translate="no">Spring Security</span>
+            <span className="notranslate" translate="no">REST API</span> <span className="notranslate" translate="no">Jason Web Token</span> <span className="notranslate" translate="no">JUnit</span>
+            <span className="notranslate" translate="no">Mockito</span> <span className="notranslate" translate="no">MySQL</span> <span className="notranslate" translate="no">Docker</span>
+            <span className="notranslate" translate="no">Git</span> <span className="notranslate" translate="no">GitHub Actions (CI/CD)</span>
           </div>
         </div>
         <div className="tech-item" id="extra-techs">
           <h3 className="label">
-            <span className="user-at-machine">guest@portfolio:</span>
-            <span className="user-at-machine-symbol">~$</span>
+            <span className="user-at-machine notranslate" translate="no">guest@portfolio:</span>
+            <span className="user-at-machine-symbol notranslate" translate="no">~$</span>
             {t("aboutme_stacks_complementary")}
           </h3>
 
           <div className="simple-terminal-table">
-            <span>JavaScript</span> <span>React</span> <span>MuleSoft</span> 
-            <span>PHP</span> <span>Python</span> <span>C#</span> <span>HTML</span>
-            <span>CSS</span> 
+            <span className="notranslate" translate="no">JavaScript</span> <span className="notranslate" translate="no">React</span> <span className="notranslate" translate="no">MuleSoft</span>
+            <span className="notranslate" translate="no">PHP</span> <span className="notranslate" translate="no">Python</span> <span className="notranslate" translate="no">C#</span> <span className="notranslate" translate="no">HTML</span>
+            <span className="notranslate" translate="no">CSS</span>
           </div>
         </div>
       </div>
@@ -94,7 +94,9 @@ function AboutMe({onPointerOver, onClick, onPointerOut, t}: AboutMeProps) {
                           t("aboutme_redirecting_command") + (value == "Email" ? "Gmail" : value) + "..."                     
                         ])}
                     >
-                      {value + " →"}
+                      {value === "GitHub" || value === "LinkedIn"
+                        ? <span className="notranslate" translate="no">{value}</span>
+                        : value}{" →"}
                     </a>
                 </span>
             ))

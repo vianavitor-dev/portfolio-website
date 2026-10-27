@@ -6,11 +6,19 @@ type PageNavigationProps = {
   currentPage: PortfolioPage;
   onNavigate: (page: PortfolioPage) => void;
   t: TFunction<"default", unknown>;
+  lang?: string;
+  inert?: boolean;
 };
 
-export default function PageNavigation({currentPage, onNavigate, t}: PageNavigationProps) {
+export default function PageNavigation({currentPage, onNavigate, t, lang, inert}: PageNavigationProps) {
   return (
-    <nav className="page-navigation" aria-label="Main navigation">
+    <nav
+      className="page-navigation"
+      aria-label={t("navigation_label", {
+        defaultValue: lang?.startsWith("pt") ? "Navegação principal" : "Main navigation"
+      })}
+      inert={inert}
+    >
       <button
         type="button"
         className={`page-navigation-button${currentPage === "about-me" ? " is-active" : ""}`}
