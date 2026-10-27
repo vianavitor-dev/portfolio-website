@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { ProjectCard } from "../common/PublicInterfaces";
 import type { TFunction } from "i18next";
+import TechnicalDescription from "../common/TechnicalDescription";
 
 type ProjectDetailsProps = {
   selectedProjectIndex: number;
@@ -55,10 +56,21 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
     }
   };
 
-  const paragraphs = selectedProject.fullDescription
+  const subtitle = isPortuguese
+    ? selectedProject.subtitlePt ?? selectedProject.subtitle
+    : selectedProject.subtitle;
+  const paragraphs = (isPortuguese
+    ? selectedProject.fullDescriptionPt ?? selectedProject.fullDescription
+    : selectedProject.fullDescription)
     .split(/\n\s*\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
+  const unavailableWebsiteLabel = t("projectdetails_invalid_website_link", {
+    defaultValue: isPortuguese ? "Site indisponível" : "Website not available"
+  });
+  const unavailableRepositoryLabel = t("projectdetails_invalid_repo_link", {
+    defaultValue: isPortuguese ? "Repositório do GitHub indisponível" : "GitHub repository not available"
+  });
 
   return (
     <section
@@ -66,6 +78,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-details-title"
+      aria-describedby={paragraphs.length > 0 ? "project-details-description" : undefined}
       onKeyDown={containDialogFocus}
     >
       <button
@@ -84,7 +97,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
       </button>
       <div className="project-details-header">
         <p className="sub-title project-subtitle">
-          | {selectedProject.subtitle ?? selectedProject.shortDescription}
+          | <TechnicalDescription text={subtitle} technicalTerms={selectedProject.technologies} />
         </p>
         <h1 className="title notranslate" id="project-details-title" translate="no">{selectedProject.header}</h1>
 
@@ -95,7 +108,9 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
             defaultValue: isPortuguese ? "carrossel" : "carousel"
           })}
           aria-label={t("projectdetails_carousel_label", {
-            defaultValue: isPortuguese ? "Capturas de tela do projeto" : "Project screenshots"
+            defaultValue: isPortuguese
+              ? `Capturas de tela do projeto ${selectedProject.header}`
+              : `${selectedProject.header} project screenshots`
           })}
         >
           {images.length > 1 && (
@@ -174,15 +189,17 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
       </div>
 
       <div className="project-details-body">
-        <div className="project-description">
+        <div className="project-description" id="project-details-description">
           {paragraphs.map((paragraph, index) => (
-            <p key={`${selectedProjectIndex}-description-${index}`}>{paragraph}</p>
+            <p key={`${selectedProjectIndex}-description-${index}`}>
+              <TechnicalDescription text={paragraph} technicalTerms={selectedProject.technologies} />
+            </p>
           ))}
         </div>
 
         <h3 className="label">
-          <span className="user-at-machine">guest@portfolio:</span>
-          <span className="user-at-machine-symbol">~$</span>
+          <span className="user-at-machine notranslate" translate="no">guest@portfolio:</span>
+          <span className="user-at-machine-symbol notranslate" translate="no">~$</span>
           {t("projectdetails_tech_title")}
         </h3>
         <div className="simple-terminal-table">
@@ -192,8 +209,8 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
         </div>
 
         <h3 className="label project-links-heading">
-          <span className="user-at-machine">guest@portfolio:</span>
-          <span className="user-at-machine-symbol">~$</span>
+          <span className="user-at-machine notranslate" translate="no">guest@portfolio:</span>
+          <span className="user-at-machine-symbol notranslate" translate="no">~$</span>
           {t("projectdetails_links_title")}
         </h3>
         <div className="available-at">
@@ -201,7 +218,8 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
             <a
               href={selectedProject.deployedUrl ?? undefined}
               className={`project-link${selectedProject.deployedUrl ? " active" : " inactive"}`}
-              title={selectedProject.deployedUrl ? "" : t("projectdetails_invalid_website_link")}
+              title={selectedProject.deployedUrl ? undefined : unavailableWebsiteLabel}
+              aria-label={selectedProject.deployedUrl ? undefined : unavailableWebsiteLabel}
               target={selectedProject.deployedUrl ? "_blank" : undefined}
               rel={selectedProject.deployedUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.deployedUrl}
@@ -218,7 +236,8 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
             <a
               href={selectedProject.githubUrl ?? undefined}
               className={`project-link${selectedProject.githubUrl ? " active" : " inactive"}`}
-              title={selectedProject.githubUrl ? "" : t("projectdetails_invalid_repo_link")}
+              title={selectedProject.githubUrl ? undefined : unavailableRepositoryLabel}
+              aria-label={selectedProject.githubUrl ? undefined : unavailableRepositoryLabel}
               target={selectedProject.githubUrl ? "_blank" : undefined}
               rel={selectedProject.githubUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.githubUrl}
@@ -226,7 +245,7 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
                 if (!selectedProject.githubUrl) event.preventDefault();
               }}
             >
-              <span className="project-link-label" translate="no">{t("projectdetails_visit_repo")}</span>
+              <span className="project-link-label">{t("projectdetails_visit_repo")}</span>
               <span className="project-link-arrow" aria-hidden="true">→</span>
             </a>
           </div>

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import type { ProjectCard } from "../common/PublicInterfaces";
 import type { TFunction } from "i18next";
+import TechnicalDescription from "../common/TechnicalDescription";
 
 type ProjectsProps = {
   setSelectedProjectIndex: (index: number, trigger?: HTMLElement) => void;
@@ -33,7 +34,7 @@ function Projects({ setSelectedProjectIndex, projectData, t, lang }: ProjectsPro
       <p>{t("projects_p1")}</p>
       <div className="card-container">
         <div className="card-rail">
-          {projectData.map(({ header, shortDescription, imagesUrl, technologies }, index) => (
+          {projectData.map(({ header, shortDescription, shortDescriptionPt, imagesUrl, technologies }, index) => (
             <div
               role="button"
               tabIndex={0}
@@ -68,7 +69,12 @@ function Projects({ setSelectedProjectIndex, projectData, t, lang }: ProjectsPro
 
               <h3 className="title notranslate" translate="no">{header}</h3>
               <div className="body">
-                <p>{shortDescription}</p>
+                <p>
+                  <TechnicalDescription
+                    text={isPortuguese ? shortDescriptionPt ?? shortDescription : shortDescription}
+                    technicalTerms={technologies}
+                  />
+                </p>
 
                 <div className="technologies-used-container">
                   <div className="technologies-used">

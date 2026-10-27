@@ -262,7 +262,16 @@ function App() {
   return (
     <>
       <main id="main-container" inert={selectedProjectIndex !== -1}>
-        <div className="main-container-content" id="terminal">
+        <div
+          className="main-container-content"
+          id="terminal"
+          role="region"
+          aria-label={t("terminal_region_label", {
+            defaultValue: i18n.resolvedLanguage?.startsWith("pt")
+              ? "Terminal interativo"
+              : "Interactive terminal"
+          })}
+        >
           {
             // generate commands
             cmdList.slice(-20).map((item, index) => createCmd(item, index))
