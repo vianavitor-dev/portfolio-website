@@ -3,9 +3,7 @@
     "header": "Tech E-Commerce API",
     "subtitle": "A Spring Boot API for a PC components store",
     "subtitlePt": "Uma API Spring Boot para uma loja de componentes de computador",
-    "imagesUrl": [
-      "https://chatgpt.com/backend-api/estuary/public_content/enc/eyJpZCI6Im1fNmFkNTMwNGU4NzljODE5MWJlZDYyYmQzZmQ0NGRhMjc6ZmlsZV8wMDAwMDAwMGFjYzg4MjBlOTZkN2E1NGRmYTU0Y2RlNyIsImdpem1vX2lkIjpudWxsLCJ3aWQiOm51bGwsIm9pZCI6bnVsbCwic2lkIjpudWxsLCJjcyI6bnVsbCwiZm4iOm51bGwsImNkIjpudWxsLCJ0cyI6IjIwNzQ0IiwicCI6InB5aSIsImNpZCI6IjEiLCJzaWciOiJjYTZlMTJlYTAwYzdmNmFmMDg5YTg5NjY5ZDA3NDc0YTQwMzcxNTJlMDhhZjFlMzMzMWI4OGY5OGRjN2ZlNDIwIiwidiI6IjAiLCJjZG4iOm51bGwsImNwIjpudWxsLCJtYSI6bnVsbH0="
-    ],
+    "imagesUrl": [],
     "shortDescription": "A REST API for a computer components e-commerce platform, featuring user authentication, authorization, and a compatibility checker that helps customers choose compatible PC components.",
     "shortDescriptionPt": "Uma REST API para uma plataforma de comércio eletrônico de componentes de computador, com autenticação e autorização de usuários e um verificador de compatibilidade que ajuda clientes a escolher peças compatíveis.",
     "fullDescription": "A backend project for an online store specializing in computer components, developed with Java and Spring Boot. The application uses Spring Security and JWT for user authentication and authorization, JPA for data persistence, and MySQL as its database. A key feature is the PC component compatibility checker, designed to help less experienced users identify compatible hardware before making purchasing decisions. The project also includes automated testing with JUnit and a CI workflow using GitHub Actions. Planned improvements include inventory management, a graphical interface, and Mercado Pago integration.",
@@ -31,9 +29,7 @@
     "header": "ComunicaVet",
     "subtitle": "A veterinary clinic discovery and recommendation platform",
     "subtitlePt": "Uma plataforma para encontrar e receber recomendações de clínicas veterinárias",
-    "imagesUrl": [
-      "https://chatgpt.com/backend-api/estuary/public_content/enc/eyJpZCI6Im1fNmFkNTMwNGU4NzljODE5MWJlZDYyYmQzZmQ0NGRhMjc6ZmlsZV8wMDAwMDAwMGFjYzg4MjBlOTZkN2E1NGRmYTU0Y2RlNyIsImdpem1vX2lkIjpudWxsLCJ3aWQiOm51bGwsIm9pZCI6bnVsbCwic2lkIjpudWxsLCJjcyI6bnVsbCwiZm4iOm51bGwsImNkIjpudWxsLCJ0cyI6IjIwNzQ0IiwicCI6InB5aSIsImNpZCI6IjEiLCJzaWciOiJjYTZlMTJlYTAwYzdmNmFmMDg5YTg5NjY5ZDA3NDc0YTQwMzcxNTJlMDhhZjFlMzMzMWI4OGY5OGRjN2ZlNDIwIiwidiI6IjAiLCJjZG4iOm51bGwsImNwIjpudWxsLCJtYSI6bnVsbH0="
-    ],
+    "imagesUrl": [],
     "shortDescription": "A web application that helps pet owners discover nearby veterinary clinics through location-based recommendations, ratings, and filters, with AI-powered treatment recommendations and pet care tips.",
     "shortDescriptionPt": "Uma aplicação web que ajuda tutores a encontrar clínicas veterinárias próximas por meio de recomendações por localização, avaliações e filtros, além de sugestões de tratamento e dicas de cuidados para os pets com inteligência artificial.",
     "fullDescription": "ComunicaVet is an academic integrative project developed at FATEC Ourinhos and submitted to CONAIDUC in 2026. The application helps pet owners find nearby veterinary clinics through location-based recommendations, ratings, and search filters. It also incorporates AI functionality to provide treatment recommendations and pet care tips for registered pets. The system combines a Java and Spring Boot REST API, a React frontend, a Python-based AI component, and MySQL for data persistence. AWS Bucket is used for image storage, while Docker and cloud technologies support the application's infrastructure.",
@@ -59,9 +55,7 @@
     "header": "MuleSoft - Integration & Synchronization",
     "subtitle": "Automating customer data synchronization between MySQL and Salesforce",
     "subtitlePt": "Automatização da sincronização de dados de clientes entre MySQL e Salesforce",
-    "imagesUrl": [
-      "https://chatgpt.com/backend-api/estuary/public_content/enc/eyJpZCI6Im1fNmFkNTMwNGU4NzljODE5MWJlZDYyYmQzZmQ0NGRhMjc6ZmlsZV8wMDAwMDAwMGFjYzg4MjBlOTZkN2E1NGRmYTU0Y2RlNyIsImdpem1vX2lkIjpudWxsLCJ3aWQiOm51bGwsIm9pZCI6bnVsbCwic2lkIjpudWxsLCJjcyI6bnVsbCwiZm4iOm51bGwsImNkIjpudWxsLCJ0cyI6IjIwNzQ0IiwicCI6InB5aSIsImNpZCI6IjEiLCJzaWciOiJjYTZlMTJlYTAwYzdmNmFmMDg5YTg5NjY5ZDA3NDc0YTQwMzcxNTJlMDhhZjFlMzMzMWI4OGY5OGRjN2ZlNDIwIiwidiI6IjAiLCJjZG4iOm51bGwsImNwIjpudWxsLCJtYSI6bnVsbH0="
-    ],
+    "imagesUrl": [],
     "shortDescription": "An automated integration between MySQL and Salesforce Accounts that synchronizes customer records, creates missing Salesforce accounts, and stores Salesforce IDs in the local database.",
     "shortDescriptionPt": "Uma integração automatizada entre MySQL e Salesforce Accounts que sincroniza registros de clientes, cria contas ausentes no Salesforce e armazena os IDs do Salesforce no banco de dados local.",
     "fullDescription": "A system integration project developed with MuleSoft Anypoint Studio, DataWeave, MySQL, and Salesforce. The automation queries customer records in MySQL and creates corresponding Salesforce Accounts when they do not already exist. It then synchronizes Salesforce customer records back to MySQL, storing Salesforce-generated IDs to facilitate record lookup and synchronization. The integration uses Scheduler, Database Connector, DataWeave, and Salesforce Connector, with logging and error handling to support reliable execution.",
