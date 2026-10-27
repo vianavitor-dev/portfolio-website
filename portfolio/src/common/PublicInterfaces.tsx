@@ -2,12 +2,15 @@
 export interface ProjectCard {
   header: string;
   subtitle: string;
-  imagesUrl: string;
+  subtitlePt?: string;
+  imagesUrl: string[];
   shortDescription: string;
+  shortDescriptionPt?: string;
   fullDescription: string;
+  fullDescriptionPt?: string;
   technologies: string[];
-  deployedUrl: string;
-  githubUrl: string;
+  deployedUrl: string | null;
+  githubUrl: string | null;
 }
 
 export interface CommandInterface {

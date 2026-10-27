@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { KeyboardEvent as ReactKeyboardEvent } from "react";
 import type { ProjectCard } from "../common/PublicInterfaces";
 import type { TFunction } from "i18next";
+import TechnicalDescription from "../common/TechnicalDescription";
 
 type ProjectDetailsProps = {
   selectedProjectIndex: number;
@@ -17,13 +19,15 @@ const fallbackImages = [
 
 export default function ProjectDetails({selectedProjectIndex, selectedProject, onClose, t, lang}: ProjectDetailsProps) {
   const images = selectedProject.imagesUrl?.length
-    ? [selectedProject.imagesUrl]
+    ? selectedProject.imagesUrl
     : fallbackImages;
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const isPortuguese = lang?.startsWith("pt") ?? false;
 
   useEffect(() => {
-    setActiveImageIndex(0);
-  }, [selectedProjectIndex]);
+    closeButtonRef.current?.focus();
+  }, []);
 
   const showPreviousImage = () => {
     setActiveImageIndex((current) => (current - 1 + images.length) % images.length);
@@ -33,35 +37,90 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
     setActiveImageIndex((current) => (current + 1) % images.length);
   };
 
-  const paragraphs = selectedProject.fullDescription
+  const containDialogFocus = (event: ReactKeyboardEvent<HTMLElement>) => {
+    if (event.key !== "Tab") return;
+
+    const focusableElements = event.currentTarget.querySelectorAll<HTMLElement>(
+      'button:not([disabled]), a[href]:not([aria-disabled="true"])'
+    );
+    const firstElement = focusableElements.item(0);
+    const lastElement = focusableElements.item(focusableElements.length - 1);
+    if (!firstElement || !lastElement) return;
+
+    if (event.shiftKey && document.activeElement === firstElement) {
+      event.preventDefault();
+      lastElement.focus();
+    } else if (!event.shiftKey && document.activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  };
+
+  const subtitle = isPortuguese
+    ? selectedProject.subtitlePt ?? selectedProject.subtitle
+    : selectedProject.subtitle;
+  const paragraphs = (isPortuguese
+    ? selectedProject.fullDescriptionPt ?? selectedProject.fullDescription
+    : selectedProject.fullDescription)
     .split(/\n\s*\n/)
     .map((paragraph) => paragraph.trim())
     .filter(Boolean);
+  const unavailableWebsiteLabel = t("projectdetails_invalid_website_link", {
+    defaultValue: isPortuguese ? "Site indisponível" : "Website not available"
+  });
+  const unavailableRepositoryLabel = t("projectdetails_invalid_repo_link", {
+    defaultValue: isPortuguese ? "Repositório do GitHub indisponível" : "GitHub repository not available"
+  });
 
   return (
-    <div id="project-details">
+    <section
+      id="project-details"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-details-title"
+      aria-describedby={paragraphs.length > 0 ? "project-details-description" : undefined}
+      onKeyDown={containDialogFocus}
+    >
       <button
         type="button"
         className="project-details-close"
         onClick={onClose}
-        aria-label="Close project details"
-        title="Close project details"
+        ref={closeButtonRef}
+        aria-label={t("projectdetails_close", {
+          defaultValue: isPortuguese ? "Fechar detalhes do projeto" : "Close project details"
+        })}
+        title={t("projectdetails_close", {
+          defaultValue: isPortuguese ? "Fechar detalhes do projeto" : "Close project details"
+        })}
       >
         ×
       </button>
       <div className="project-details-header">
         <p className="sub-title project-subtitle">
-          | {selectedProject.subtitle ?? selectedProject.shortDescription}
+          | <TechnicalDescription text={subtitle} technicalTerms={selectedProject.technologies} />
         </p>
-        <h1 className="title">{selectedProject.header}</h1>
+        <h1 className="title notranslate" id="project-details-title" translate="no">{selectedProject.header}</h1>
 
-        <div className="image-carousel" aria-label="Project screenshots carousel">
+        <div
+          className="image-carousel"
+          role="region"
+          aria-roledescription={t("projectdetails_carousel_role", {
+            defaultValue: isPortuguese ? "carrossel" : "carousel"
+          })}
+          aria-label={t("projectdetails_carousel_label", {
+            defaultValue: isPortuguese
+              ? `Capturas de tela do projeto ${selectedProject.header}`
+              : `${selectedProject.header} project screenshots`
+          })}
+        >
           {images.length > 1 && (
             <button
               type="button"
               className="carousel-arrow left"
               onClick={showPreviousImage}
-              // aria-label="Show previous screenshot"
+              aria-label={t("projectdetails_previous_image", {
+                defaultValue: isPortuguese ? "Mostrar captura de tela anterior" : "Show previous screenshot"
+              })}
             >
               ‹
             </button>
@@ -73,10 +132,20 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
               style={{ transform: `translateX(-${activeImageIndex * 100}%)` }}
             >
               {images.map((imageUrl, index) => (
-                <figure className="image-carousel-slide" key={`${selectedProjectIndex}-${imageUrl}-${index}`}>
+                <figure
+                  className="image-carousel-slide"
+                  key={`${selectedProjectIndex}-${imageUrl}-${index}`}
+                  aria-hidden={index !== activeImageIndex}
+                >
                   <img
                     src={imageUrl}
-                    alt={lang == "en" ? `${selectedProject.header} screenshot ${index + 1}` : `captura de tela ${index + 1} de ${selectedProject.header}`}
+                    alt={t("projectdetails_image_alt", {
+                      project: selectedProject.header,
+                      index: index + 1,
+                      defaultValue: isPortuguese
+                        ? `Captura de tela ${index + 1} de ${selectedProject.header}`
+                        : `${selectedProject.header} screenshot ${index + 1}`
+                    })}
                     loading={index === activeImageIndex ? "eager" : "lazy"}
                   />
                 </figure>
@@ -89,7 +158,9 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
               type="button"
               className="carousel-arrow right"
               onClick={showNextImage}
-              // aria-label="Show next screenshot"
+              aria-label={t("projectdetails_next_image", {
+                defaultValue: isPortuguese ? "Mostrar próxima captura de tela" : "Show next screenshot"
+              })}
             >
               ›
             </button>
@@ -101,7 +172,13 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
                 <button
                   key={`${selectedProjectIndex}-indicator-${imageUrl}-${index}`}
                   type="button"
-                  // aria-label={`Show screenshot ${index + 1}`}
+                  aria-label={t("projectdetails_select_image", {
+                    index: index + 1,
+                    count: images.length,
+                    defaultValue: isPortuguese
+                      ? `Mostrar captura de tela ${index + 1} de ${images.length}`
+                      : `Show screenshot ${index + 1} of ${images.length}`
+                  })}
                   aria-current={index === activeImageIndex ? "true" : undefined}
                   onClick={() => setActiveImageIndex(index)}
                 />
@@ -112,26 +189,28 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
       </div>
 
       <div className="project-details-body">
-        <div className="project-description">
+        <div className="project-description" id="project-details-description">
           {paragraphs.map((paragraph, index) => (
-            <p key={`${selectedProjectIndex}-description-${index}`}>{paragraph}</p>
+            <p key={`${selectedProjectIndex}-description-${index}`}>
+              <TechnicalDescription text={paragraph} technicalTerms={selectedProject.technologies} />
+            </p>
           ))}
         </div>
 
         <h3 className="label">
-          <span className="user-at-machine">guest@portfolio:</span>
-          <span className="user-at-machine-symbol">~$</span>
+          <span className="user-at-machine notranslate" translate="no">guest@portfolio:</span>
+          <span className="user-at-machine-symbol notranslate" translate="no">~$</span>
           {t("projectdetails_tech_title")}
         </h3>
         <div className="simple-terminal-table">
           {selectedProject.technologies.map((item) => (
-            <span key={`pd${selectedProjectIndex}#${item}`}>{item}</span>
+            <span className="notranslate" translate="no" key={`pd${selectedProjectIndex}#${item}`}>{item}</span>
           ))}
         </div>
 
         <h3 className="label project-links-heading">
-          <span className="user-at-machine">guest@portfolio:</span>
-          <span className="user-at-machine-symbol">~$</span>
+          <span className="user-at-machine notranslate" translate="no">guest@portfolio:</span>
+          <span className="user-at-machine-symbol notranslate" translate="no">~$</span>
           {t("projectdetails_links_title")}
         </h3>
         <div className="available-at">
@@ -139,7 +218,8 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
             <a
               href={selectedProject.deployedUrl ?? undefined}
               className={`project-link${selectedProject.deployedUrl ? " active" : " inactive"}`}
-              title={selectedProject.deployedUrl ? "" : t("projectdetails_invalid_website_link")}
+              title={selectedProject.deployedUrl ? undefined : unavailableWebsiteLabel}
+              aria-label={selectedProject.deployedUrl ? undefined : unavailableWebsiteLabel}
               target={selectedProject.deployedUrl ? "_blank" : undefined}
               rel={selectedProject.deployedUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.deployedUrl}
@@ -156,7 +236,8 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
             <a
               href={selectedProject.githubUrl ?? undefined}
               className={`project-link${selectedProject.githubUrl ? " active" : " inactive"}`}
-              title={selectedProject.githubUrl ? "" : t("projectdetails_invalid_repo_link")}
+              title={selectedProject.githubUrl ? undefined : unavailableRepositoryLabel}
+              aria-label={selectedProject.githubUrl ? undefined : unavailableRepositoryLabel}
               target={selectedProject.githubUrl ? "_blank" : undefined}
               rel={selectedProject.githubUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.githubUrl}
@@ -164,12 +245,12 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
                 if (!selectedProject.githubUrl) event.preventDefault();
               }}
             >
-              <span className="project-link-label">{t("projectdetails_visit_repo")}</span>  
+              <span className="project-link-label">{t("projectdetails_visit_repo")}</span>
               <span className="project-link-arrow" aria-hidden="true">→</span>
             </a>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
