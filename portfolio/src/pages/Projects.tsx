@@ -1,16 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, type Dispatch, type SetStateAction } from "react";
 import type { ProjectCard } from "../common/PublicInterfaces";
 import type { TFunction } from "i18next";
 import TechnicalDescription from "../common/TechnicalDescription";
 
 type ProjectsProps = {
   setSelectedProjectIndex: (index: number, trigger?: HTMLElement) => void;
+  onPointerOver: Dispatch<SetStateAction<string>>;
   projectData: ProjectCard[];
   t: TFunction<"default", unknown>;
   lang?: string;
 };
 
-function Projects({ setSelectedProjectIndex, projectData, t, lang }: ProjectsProps) {
+function Projects({ setSelectedProjectIndex, onPointerOver, projectData, t, lang }: ProjectsProps) {
   const isPortuguese = lang?.startsWith("pt") ?? false;
 
   useEffect(() => {
@@ -40,6 +41,8 @@ function Projects({ setSelectedProjectIndex, projectData, t, lang }: ProjectsPro
               tabIndex={0}
               className="card"
               key={header}
+              onPointerOver={() => onPointerOver("project --details " + index)}
+              onPointerOut={() => onPointerOver("")}
               onClick={(event) => setSelectedProjectIndex(index, event.currentTarget)}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {

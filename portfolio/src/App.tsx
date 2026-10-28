@@ -80,9 +80,32 @@ function App() {
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(-1);
   const projectCardTriggerRef = useRef<HTMLElement | null>(null);
 
+  const handleSelectedProjectIndexChange = (index: number | null, func: (...args: never[]) => string[] = () => []) => {
+    const i = index ?? -1;
+    const resp:(...args: never[]) => string[] = 
+    (func().length <= 0) 
+    ? () => {
+      if (i == -1) {
+        return [
+          "$PROJECT_SELECTED = " + i,
+          t("command_hide_projectdetails"),
+        ];
+      }
+
+      return [
+          "$PROJECT_SELECTED = " + i,
+          t("command_render_projectdetails") + i,
+      ];
+    }
+    : func
+
+    handleCmdListChange("projects --details " + i, true, resp);
+    setSelectedProjectIndex(i);
+  }
+
   const openProjectDetails = (index: number, trigger?: HTMLElement) => {
     if (trigger) projectCardTriggerRef.current = trigger;
-    setSelectedProjectIndex(index);
+    handleSelectedProjectIndexChange(index);
   };
 
   useEffect(() => {
@@ -93,25 +116,19 @@ function App() {
   }, [selectedProjectIndex]);
 
   const navigateTo = (page: Section) => {
-    setSelectedProjectIndex(-1);
+    handleSelectedProjectIndexChange(-1);
     setCurrentSection(page);
   }
 
   const handleCmdListChange = (text = cmdText, isCommand = true, auxResponse: (...args: never[]) => string[] = () => []) => {    
     const cmd = { isCommand: isCommand, text: text } as CommandInterface;
-    const validCommands = [
-        "about-me",
-        "projects",
-        "cd github-profile",
-        "cd linkedin-profile",
-        "cd send-email",
-        "help",
-        "clear"
-    ];
+    const validCommands = "^(about-me|projects|cd github-profile|cd linkedin-profile|"
+                          + "cd send-email|cd --projectIndex \\d+ github-repository-link|set-language pt|"
+                          + "set-language en|projects --details [-]?\\d+|help|clear)$";
 
     let response: string[] = [];
 
-    if (!validCommands.includes(cmd.text)) {
+    if (!cmd.text.match(validCommands)) {
       response = [
         t("command_invalid_p1"),
         `\n `,
@@ -128,24 +145,46 @@ function App() {
           "\n ",
           "about-me",
           "projects",
+          "set-language pt",
+          "set-language en",
           "help",
           "clear"
         ];
       }
-      else if ((cmd.text === "cd github-profile" 
-        || cmd.text === "cd linkedin-profile" 
-        || cmd.text === "cd send-email") && auxResponse().length <= 0) {
+      else if (cmd.text.match("^(cd send-email|cd linkedin-profile|cd github-profile)$") 
+        && auxResponse().length <= 0) {
 
           response = [
             t("command_invalid_link")
           ];
       }
+      else if (cmd.text.match("^(set-language \\w+)$")) {
+        try {
+          console.log("a");
+          const lang: "pt" | "en" = cmd.text.slice(-2) as ("pt" | "en");
+          
+          response = [
+            "$WEBSITE_LANGUAGE = " + lang,
+            (t("command_setlang_ok")),
+          ];
+
+          i18n.changeLanguage(lang);
+        } catch(e) {
+          console.log(e)
+
+          response = [
+            t("command_setlang_invalid_p1"),
+            "\n",
+            t("command_setlang_invalid_p2"),
+          ]
+        }
+      }
       else if (cmd.text === "about-me" || cmd.text === "projects") {
         navigateTo(cmd.text);
 
         response = [
+          `$CURRENT_PAGE = ${cmd.text}`,
           (cmd.text === "about-me") ? t("command_aboutme_p1") : t("command_projects_p1"), 
-          `$CURRENT_PAGE = ${cmd.text}`
         ];
       }
     }
@@ -188,6 +227,7 @@ function App() {
         isWriting = true;
 
         document.querySelectorAll("a").forEach((item) => item.blur());
+        document.querySelectorAll("div").forEach((item) => item.blur());
 
         currentLineRef.current?.focus();
         currentLineRef.current?.classList.add("on-focus");
@@ -234,6 +274,7 @@ function App() {
         return (
           <Projects
             setSelectedProjectIndex={openProjectDetails}
+            onPointerOver={setCmdText}
             projectData={projectData}
             t={t}
             lang={i18n.resolvedLanguage}
@@ -260,14 +301,16 @@ function App() {
       <>
         <div
           className="shadow-curtain"
-          onClick={() => setSelectedProjectIndex(-1)}
+          onClick={() => handleSelectedProjectIndexChange(-1)}
           aria-hidden="true"
         />
 
         <ProjectDetails
           selectedProject={selectedProject}
           selectedProjectIndex={selectedProjectIndex}
-          onClose={() => setSelectedProjectIndex(-1)}
+          onClose={() => handleSelectedProjectIndexChange(-1)}
+          onPointerOverLink={setCmdText}
+          onClickLink={handleCmdListChange}
           t={t}
           lang={i18n.resolvedLanguage}
         />
@@ -328,7 +371,8 @@ function App() {
 
       <PageNavigation 
         currentPage={currentSection} 
-        onNavigate={navigateTo} 
+        onNavigate={handleCmdListChange} 
+        onPointerOver={setCmdText}
         t={t}
         lang={i18n.resolvedLanguage}
         inert={selectedProjectIndex !== -1}
