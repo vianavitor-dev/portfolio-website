@@ -133,12 +133,12 @@ function App() {
           console.log("a");
           const lang: "pt" | "en" = cmd.text.slice(-2) as ("pt" | "en");
           
-          i18n.changeLanguage(lang);
-
           response = [
             "$WEBSITE_LANGUAGE = " + lang,
-            t("command_setlang_ok"),
+            (t("command_setlang_ok")),
           ];
+
+          i18n.changeLanguage(lang);
         } catch(e) {
           console.log(e)
 
