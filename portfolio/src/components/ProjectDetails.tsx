@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { KeyboardEvent as ReactKeyboardEvent } from "react";
+import type { Dispatch, KeyboardEvent as ReactKeyboardEvent, SetStateAction } from "react";
 import type { ProjectCard } from "../common/PublicInterfaces";
 import type { TFunction } from "i18next";
 import TechnicalDescription from "../common/TechnicalDescription";
@@ -7,6 +7,8 @@ import TechnicalDescription from "../common/TechnicalDescription";
 type ProjectDetailsProps = {
   selectedProjectIndex: number;
   selectedProject: ProjectCard;
+  onPointerOverLink: Dispatch<SetStateAction<string>>;
+  onClickLink: (text?: string, isCommand?: boolean, auxResponse?: (...args: never[]) => string[]) => void;
   onClose: () => void;
   t: TFunction<"default", unknown>;
   lang?: string;
@@ -17,7 +19,7 @@ const fallbackImages = [
   "https://placehold.co/800x500?text=Project+Screenshot+2",
 ];
 
-export default function ProjectDetails({selectedProjectIndex, selectedProject, onClose, t, lang}: ProjectDetailsProps) {
+export default function ProjectDetails({selectedProjectIndex, selectedProject, onPointerOverLink, onClickLink, onClose, t, lang}: ProjectDetailsProps) {
   const images = selectedProject.imagesUrl?.length
     ? selectedProject.imagesUrl
     : fallbackImages;
@@ -223,8 +225,21 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
               target={selectedProject.deployedUrl ? "_blank" : undefined}
               rel={selectedProject.deployedUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.deployedUrl}
+              onPointerOver={() => onPointerOverLink(`cd --projectIndex ${selectedProjectIndex} website-link`)}
+              onPointerOut={() => onPointerOverLink("")}
               onClick={(event) => {
                 if (!selectedProject.deployedUrl) event.preventDefault();
+                if (selectedProject.githubUrl != null) {
+                  onClickLink(`cd --projectIndex ${selectedProjectIndex} github-repository-link`, 
+                    true, () => [t("aboutme_redirecting_command") + "website-link..."]);
+                }
+              }}
+              onAuxClick={(event) => {
+                if (!selectedProject.githubUrl) event.preventDefault();
+                if (selectedProject.githubUrl != null) {
+                  onClickLink(`cd --projectIndex ${selectedProjectIndex} github-repository-link`, 
+                    true, () => [t("aboutme_redirecting_command") + "website-link..."]);
+                }
               }}
             >
               <span className="project-link-label">{t("projectdetails_visit_website")}</span>
@@ -241,8 +256,21 @@ export default function ProjectDetails({selectedProjectIndex, selectedProject, o
               target={selectedProject.githubUrl ? "_blank" : undefined}
               rel={selectedProject.githubUrl ? "noopener noreferrer" : undefined}
               aria-disabled={!selectedProject.githubUrl}
+              onPointerOver={() => onPointerOverLink(`cd --projectIndex ${selectedProjectIndex} github-repository-link`)}
+              onPointerOut={() => onPointerOverLink("")}
               onClick={(event) => {
                 if (!selectedProject.githubUrl) event.preventDefault();
+                if (selectedProject.githubUrl != null) {
+                  onClickLink(`cd --projectIndex ${selectedProjectIndex} github-repository-link`, 
+                    true, () => [t("aboutme_redirecting_command") + "github-repository-link..."]);
+                }
+              }}
+              onAuxClick={(event) => {
+                if (!selectedProject.githubUrl) event.preventDefault();
+                if (selectedProject.githubUrl != null) {
+                  onClickLink(`cd --projectIndex ${selectedProjectIndex} github-repository-link`, 
+                    true, () => [t("aboutme_redirecting_command") + "github-repository-link..."]);
+                }
               }}
             >
               <span className="project-link-label">{t("projectdetails_visit_repo")}</span>
