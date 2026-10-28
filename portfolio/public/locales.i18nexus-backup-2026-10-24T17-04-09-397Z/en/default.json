@@ -9,10 +9,15 @@
   "aboutme_title_myjob": "Java Backend Developer",
   "aboutme_title_myname": "I'm Vitor a",
   "command_aboutme_p1": "'about-me' page successfuly rendered",
+  "command_hide_projectdetails": "hide project details",
   "command_invalid_link": "you can't use this command in the terminal, use the links instead",
   "command_invalid_p1": "unknow command!",
   "command_invalid_p2": "try 'help' to find the supported commands",
   "command_projects_p1": "'projects' page successfuly rendered",
+  "command_render_projectdetails": "render project from index ",
+  "command_setlang_invalid_p1": "language invalid",
+  "command_setlang_invalid_p2": "supported languages: en, pt",
+  "command_setlang_ok": "website language successfully updated",
   "navbtn_aboutme": "About Me",
   "navbtn_projects": "Projects",
   "projectdetails_btnleft_label": "Show next screenshot",
@@ -27,6 +32,6 @@
   "projects_subtitle": "| More projects coming soon!",
   "projects_title": "My Projects",
   "terminal_greetings_header": "WELCOME TO MY PORTFOLIO",
-  "terminal_greetings_p1": "Enter '\\\\' to start writing in this terminal",
+  "terminal_greetings_p1": "Enter '\\' to start writing in this terminal",
   "terminal_greetings_p2": "** If you have any doubt about which command use, then write 'help' in this terminal"
 }
