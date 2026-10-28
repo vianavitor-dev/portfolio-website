@@ -19,6 +19,10 @@ Visit my portfolio! [Click here](https://vianavitor-portfolio.vercel.app/)
 - **Responsive Design:** Access the portfolio across desktop and mobile devices.
 - **Simple Navigation:** Switch between the About Me and My Projects pages without relying on terminal commands.
 
+## SEO
+
+The site includes localized page titles and descriptions, social sharing metadata, structured data, and a canonical URL.
+
 ## Technologies
 
 - React
@@ -85,4 +89,3 @@ This portfolio is an ongoing project that I use to showcase my work and improve 
 ## License
 
 This project is provided for portfolio and educational purposes. Check the repository for applicable licensing terms.
-
