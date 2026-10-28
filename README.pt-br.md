@@ -18,6 +18,10 @@ Visite meu portfólio! [Clique aqui](https://vianavitor-portfolio.vercel.app/)
 - **Design Responsivo:** Acesse o portfólio em computadores e dispositivos móveis.
 - **Navegação Simplificada:** Alterne entre as páginas Sobre Mim e Meus Projetos sem precisar utilizar comandos do terminal.
 
+## SEO
+
+O site inclui títulos e descrições localizados, metadados para compartilhamento em redes sociais, dados estruturados e uma URL canônica.
+
 ## Tecnologias
 
 - React

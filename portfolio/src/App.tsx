@@ -17,15 +17,45 @@ function App() {
 
   const { t, i18n } = useTranslation('default');
   useEffect(() => {
-    document.documentElement.lang = i18n.resolvedLanguage || 'en';
-  }, [i18n.resolvedLanguage]);
-
-  useEffect(() => {
-    document.title = t("document_title", {
-      defaultValue: i18n.resolvedLanguage?.startsWith("pt")
-        ? "Portfólio de Vitor Viana"
-        : "Vitor Viana | Portfolio"
+    const isPortuguese = i18n.resolvedLanguage?.startsWith("pt") ?? false;
+    const title = t("document_title", {
+      defaultValue: isPortuguese
+        ? "Portfólio de Vitor Hugo Marques Viana"
+        : "Vitor Hugo Marques Viana | Portfolio"
     });
+    const description = isPortuguese
+      ? "Conheça a trajetória, os projetos e as habilidades técnicas de Vitor em desenvolvimento de software."
+      : "Explore Vitor's software development career, projects, and technical skills.";
+
+    document.documentElement.lang = i18n.resolvedLanguage || "en";
+    document.title = title;
+
+    const setMetaContent = (
+      selector: string,
+      attribute: "name" | "property",
+      key: string,
+      content: string,
+    ) => {
+      let meta = document.head.querySelector<HTMLMetaElement>(selector);
+      if (!meta) {
+        meta = document.createElement("meta");
+        meta.setAttribute(attribute, key);
+        document.head.append(meta);
+      }
+      meta.content = content;
+    };
+
+    setMetaContent('meta[name="description"]', "name", "description", description);
+    setMetaContent('meta[property="og:title"]', "property", "og:title", title);
+    setMetaContent('meta[property="og:description"]', "property", "og:description", description);
+    setMetaContent(
+      'meta[property="og:locale"]',
+      "property",
+      "og:locale",
+      isPortuguese ? "pt_BR" : "en_US",
+    );
+    setMetaContent('meta[name="twitter:title"]', "name", "twitter:title", title);
+    setMetaContent('meta[name="twitter:description"]', "name", "twitter:description", description);
   }, [i18n.resolvedLanguage, t]);
 
   const [cmdText, setCmdText] = useState("");
