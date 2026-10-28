@@ -115,6 +115,8 @@ function App() {
           "\n ",
           "about-me",
           "projects",
+          "set-language pt",
+          "set-language en",
           "help",
           "clear"
         ];
