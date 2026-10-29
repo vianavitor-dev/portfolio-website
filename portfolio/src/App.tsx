@@ -7,6 +7,7 @@ import ProjectDetails from "./components/ProjectDetails";
 import useProjectDataReader from "./hooks/useProjectDataReader";
 import PageNavigation from "./components/PageNavigation";
 import { useTranslation } from "react-i18next";
+import { Analytics } from "@vercel/analytics/react";
 
 
 function App() {
@@ -349,6 +350,7 @@ function App() {
       />
 
       {selectedProjectIndex != -1 ? RenderSelectedProject() : null}
+      <Analytics />
     </>
   );
 }
