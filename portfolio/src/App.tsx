@@ -350,7 +350,7 @@ function App() {
       />
 
       {selectedProjectIndex != -1 ? RenderSelectedProject() : null}
-      <Analytics />
+      <Analytics mode="production" />
     </>
   );
 }
